@@ -179,6 +179,8 @@ body.mode-session .scene-veil{background:radial-gradient(ellipse at 50% 45%,tran
 }
 .chip:hover{border-color:var(--jade);color:var(--ink)}
 .chip.is-selected{background:var(--jade-deep);border-color:var(--jade-deep);color:var(--paper)}
+.sound-credit{margin-top:10px;font-size:11px;line-height:1.6;color:var(--ink-faint)}
+.sound-credit a{color:var(--jade-deep);text-decoration:underline;text-underline-offset:2px}
 
 /* ============================================================
    静心中
@@ -191,10 +193,15 @@ body.mode-session .icon-btn{color:var(--paper)}
   display:flex;align-items:center;justify-content:space-between;
   padding:22px 26px;pointer-events:auto;
 }
+.session-meta{display:flex;flex-direction:column;align-items:center;gap:6px;text-align:center}
 .co-presence{
   font-family:var(--serif);font-size:13px;letter-spacing:.16em;
   color:rgba(245,241,230,.8);display:flex;align-items:center;gap:9px;
   text-shadow:0 1px 8px rgba(0,0,0,.4);
+}
+.sound-status{
+  font-size:11px;letter-spacing:.1em;color:rgba(245,241,230,.58);
+  text-shadow:0 1px 8px rgba(0,0,0,.45);min-height:16px;
 }
 .co-dot{width:6px;height:6px;border-radius:50%;background:var(--gold);box-shadow:0 0 10px var(--gold);animation:pulseDot 3s ease-in-out infinite}
 

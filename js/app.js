@@ -16,7 +16,9 @@
     scene: 'forest',
     minutes: 10,
     breath: 'calm',
-    sound: 'off',
+    sound: 'guide3',
+    lastSound: 'guide3',
+    guideEnded: false,
     // 会话运行态
     running: false,
     paused: false,
@@ -64,7 +66,10 @@
 
   // ---------- 引擎实例 ----------
   const sceneEngine = new SceneEngine($('#scene'));
-  const audio = new AudioEngine();
+  const audio = new AudioEngine(function () {
+    state.guideEnded = true;
+    updateSoundStatus();
+  });
 
   // 场景 → 真实照片（暖金色调写实山水；无图场景自动回退程序化绘制）
   const PHOTOS = {
@@ -73,6 +78,17 @@
     ocean:  'assets/ocean.jpg',
     temple: 'assets/temple.jpg',
     river:  'assets/river.jpg'
+  };
+
+  const SOUND_LABELS = {
+    guide3: '3分钟正念引导',
+    bowl: '颂钵',
+    forest: '林风',
+    water: '流水',
+    waves: '海浪',
+    insects: '虫鸣',
+    birds: '鸟鸣',
+    life: '生活声'
   };
 
   // 预加载全部照片到浏览器缓存，切换时零等待、零闪烁
@@ -167,10 +183,11 @@
         state[({ scene: 'scene', min: 'minutes', breath: 'breath', sound: 'sound' })[key]] = transform ? transform(val) : val;
         if (key === 'scene') applyScene(val);
         if (key === 'sound') {
+          // 设置页只记住选择，真正播放发生在点击「开始静坐」之后
           audio.setType(val);
-          if (val !== 'off') audio.enable();
-          else audio.disable();
+          state.lastSound = val;
           updateSoundIcon();
+          updateSoundStatus();
         }
       });
     });
@@ -189,7 +206,18 @@
   bindChips('#sound-row', 'sound', null);
 
   function updateSoundIcon() {
-    $('#sound-icon').textContent = (state.sound === 'off') ? '🔇' : '🔊';
+    $('#sound-icon').textContent = (state.sound === 'off') ? '静' : '声';
+    $('#btn-sound').setAttribute('aria-label', state.sound === 'off' ? '开启声音' : '静音');
+  }
+
+  function updateSoundStatus() {
+    if (state.sound === 'off') {
+      $('#sound-status').textContent = '已静音';
+    } else if (state.sound === 'guide3' && state.guideEnded) {
+      $('#sound-status').textContent = '引导结束，余下时间留给自己';
+    } else {
+      $('#sound-status').textContent = SOUND_LABELS[state.sound] || '声音';
+    }
   }
 
   // ---------- 屏幕按钮 ----------
@@ -204,15 +232,17 @@
   $('#btn-home').addEventListener('click', () => { show('intro'); applyScene('forest'); });
   $('#btn-sound').addEventListener('click', () => {
     if (state.sound === 'off') {
-      state.sound = 'water';
-      audio.setType('water'); audio.enable();
-      $$('#sound-row .chip').forEach(c => c.classList.toggle('is-selected', c.dataset.sound === 'water'));
+      state.sound = state.lastSound || 'guide3';
+      audio.setType(state.sound);
+      if (state.running && !state.paused) audio.resume();
     } else {
+      state.lastSound = state.sound;
       state.sound = 'off';
       audio.disable();
-      $$('#sound-row .chip').forEach(c => c.classList.toggle('is-selected', c.dataset.sound === 'off'));
     }
+    $$('#sound-row .chip').forEach(c => c.classList.toggle('is-selected', c.dataset.sound === state.sound));
     updateSoundIcon();
+    updateSoundStatus();
   });
 
   // ---------- 会话控制 ----------
@@ -242,10 +272,17 @@
     $('#progress-fill').style.width = '0%';
     $('#pause-overlay').classList.remove('is-active');
     setGuidance(state._guidanceSeq[0], true);
+    state.guideEnded = false;
     updateSoundIcon();
+    updateSoundStatus();
 
-    // 若用户此前选了环境声，进入会话时确保发声
-    if (state.sound !== 'off') { audio.setType(state.sound); audio.enable(); }
+    // 用户点击「开始静坐」后才播放，设置页不预发声
+    if (state.sound !== 'off') {
+      audio.setType(state.sound);
+      audio.play();
+    } else {
+      audio.stop();
+    }
 
     show('session');
   }
@@ -253,12 +290,14 @@
   function pauseSession() {
     if (!state.running || state.paused) return;
     state.paused = true;
+    audio.pause();
     $('#pause-overlay').classList.add('is-active');
   }
   function resumeSession() {
     if (!state.paused) return;
     state.paused = false;
     state.lastTick = performance.now();
+    if (state.sound !== 'off') audio.resume();
     $('#pause-overlay').classList.remove('is-active');
   }
 
@@ -382,5 +421,7 @@
   preloadPhotos();
   applyScene('forest');
   show('intro');
+  updateSoundIcon();
+  updateSoundStatus();
   requestAnimationFrame(loop);
 })();

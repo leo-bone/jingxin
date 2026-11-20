@@ -103,14 +103,18 @@
     </div>
 
     <div class="field">
-      <div class="field-label"><span>环境声</span><span class="field-note">默认静音，可随时开启</span></div>
+      <div class="field-label"><span>声音</span><span class="field-note">选择后，开始静坐时播放；可随时静音</span></div>
       <div class="chip-row" id="sound-row">
-        <button class="chip is-selected" data-sound="off">静音</button>
+        <button class="chip is-selected" data-sound="guide3">3分钟正念引导</button>
         <button class="chip" data-sound="bowl">颂钵</button>
         <button class="chip" data-sound="forest">林风</button>
         <button class="chip" data-sound="water">流水</button>
-        <button class="chip" data-sound="wave">海浪</button>
+        <button class="chip" data-sound="waves">海浪</button>
+        <button class="chip" data-sound="insects">虫鸣</button>
+        <button class="chip" data-sound="birds">鸟鸣</button>
+        <button class="chip" data-sound="life">生活声</button>
       </div>
+      <p class="sound-credit">环境声为真实田野录音，来源与授权见 <a href="https://github.com/leo-bone/jingxin#音频来源与授权" target="_blank" rel="noopener">项目说明</a>。</p>
     </div>
 
     <button class="btn btn--primary btn--wide" id="btn-start">开始静坐 <span class="arrow">→</span></button>
@@ -123,12 +127,15 @@
     <button class="icon-btn icon-btn--ghost" id="btn-pause" aria-label="暂停">
       <span class="pause-icon">Ⅱ</span>
     </button>
-    <div class="co-presence" id="co-presence">
-      <span class="co-dot" aria-hidden="true"></span>
-      与众人同坐，不必言语
+    <div class="session-meta">
+      <div class="co-presence" id="co-presence">
+        <span class="co-dot" aria-hidden="true"></span>
+        与众人同坐，不必言语
+      </div>
+      <div class="sound-status" id="sound-status" aria-live="polite">3分钟正念引导</div>
     </div>
     <button class="icon-btn icon-btn--ghost" id="btn-sound" aria-label="声音开关">
-      <span id="sound-icon">🔇</span>
+      <span id="sound-icon">声</span>
     </button>
   </div>
 

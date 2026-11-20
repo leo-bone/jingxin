@@ -19,7 +19,7 @@
     sound: 'guide3',
     lastSound: 'guide3',
     guideEnded: false,
-    soundLabel: '',
+    guideActive: false,  // 真人引导正在主导（此时不再滚动中文引导语，避免中英打架）
     // 会话运行态
     running: false,
     paused: false,
@@ -66,6 +66,9 @@
     '感受这一次，属于你的宁静'
   ];
 
+  // 是否为真人语音引导（女声 / 男声）
+  function isGuideSound(s) { return s === 'guide3' || s === 'guide3m'; }
+
   // 按会话时长抽取引导语序列：短时少句避免切换过密，长时铺满完整脉络
   function guidanceFor(minutes) {
     const counts = { 3: 6, 5: 8, 10: 12, 15: 15, 20: 15 };
@@ -81,7 +84,9 @@
   // ---------- 引擎实例 ----------
   const sceneEngine = new SceneEngine($('#scene'));
   const audio = new AudioEngine(function () {
+    // 真人引导播完：语音退场，中文引导语接管余下的静坐时间
     state.guideEnded = true;
+    endGuidanceMode();
     updateSoundStatus();
   });
 
@@ -266,6 +271,8 @@
       state.lastSound = state.sound;
       state.sound = 'off';
       audio.disable();
+      // 手动静音真人引导时，把引导话语权交还给屏幕，避免静默到底
+      if (state.guideActive) endGuidanceMode();
     }
     $$('#sound-row .chip').forEach(c => c.classList.toggle('is-selected', c.dataset.sound === state.sound));
     updateSoundIcon();
@@ -298,8 +305,10 @@
     $('#time-left').textContent = fmt(total);
     $('#progress-fill').style.width = '0%';
     $('#pause-overlay').classList.remove('is-active');
-    setGuidance(state._guidanceSeq[0], true);
     state.guideEnded = false;
+    state.guideActive = isGuideSound(state.sound) && state.sound !== 'off';
+    // 真人引导主导时，屏幕只给一句静态提示，让位给语音；否则用中文引导语陪伴
+    setGuidance(state.guideActive ? '跟着声音，回到呼吸' : state._guidanceSeq[0], true);
     updateSoundIcon();
     updateSoundStatus();
 
@@ -331,6 +340,7 @@
   function finishSession() {
     state.running = false;
     state.paused = false;
+    state.guideActive = false;
     $('#pause-overlay').classList.remove('is-active');
     audio.stop();
 
@@ -343,6 +353,19 @@
       ? '哪怕只是片刻，你也停下来过了。'
       : '谢谢你，留了这段时间给自己。';
     show('done');
+  }
+
+  // 真人引导退场后，中文引导语从当前进度自然接管，填补余下的静坐时间
+  function endGuidanceMode() {
+    if (!state.guideActive) return;
+    state.guideActive = false;
+    if (!state.running) return;
+    const seq = state._guidanceSeq;
+    const total = state.minutes * 60;
+    const ratio = Math.min(state.elapsed / total, 1);
+    const gi = Math.min(Math.floor(ratio * seq.length), seq.length - 1);
+    state._guidanceIndex = gi;
+    setGuidance(seq[gi], false);
   }
 
   let guidanceTimer = null;
@@ -419,12 +442,14 @@
       $('#progress-fill').style.width = (ratio * 100).toFixed(2) + '%';
       $('#time-left').textContent = fmt(total - state.elapsed);
 
-      // 阶段引导语
-      const seq = state._guidanceSeq;
-      const gi = Math.min(Math.floor(ratio * seq.length), seq.length - 1);
-      if (gi !== state._guidanceIndex) {
-        state._guidanceIndex = gi;
-        setGuidance(seq[gi], false);
+      // 阶段引导语：真人语音主导时不滚动中文引导语，避免两套引导打架
+      if (!state.guideActive) {
+        const seq = state._guidanceSeq;
+        const gi = Math.min(Math.floor(ratio * seq.length), seq.length - 1);
+        if (gi !== state._guidanceIndex) {
+          state._guidanceIndex = gi;
+          setGuidance(seq[gi], false);
+        }
       }
 
       if (state.elapsed >= total) finishSession();
@@ -437,6 +462,20 @@
     sceneEngine.render(now, reduceMotion ? 0.5 : breath);
     requestAnimationFrame(loop);
   }
+
+  // ---------- 键盘快捷键（静心时常闭眼，空格暂停/继续，Esc 结束）----------
+  document.addEventListener('keydown', (e) => {
+    if (!state.running) return;
+    // 焦点在按钮上时交给原生行为，避免空格既触发按钮又触发快捷键
+    const onButton = document.activeElement && document.activeElement.tagName === 'BUTTON';
+    if (e.code === 'Space' && !onButton) {
+      e.preventDefault();
+      if (state.paused) resumeSession(); else pauseSession();
+    } else if (e.code === 'Escape') {
+      e.preventDefault();
+      finishSession();
+    }
+  });
 
   // ---------- 初始化 ----------
   window.addEventListener('resize', () => sceneEngine.resize());

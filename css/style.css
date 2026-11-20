@@ -273,6 +273,7 @@ body.mode-session .icon-btn{color:var(--paper)}
 .pause-card p{font-family:var(--serif);font-size:24px;letter-spacing:.2em}
 .pause-card .text-btn{color:rgba(245,241,230,.65)}
 .pause-card .text-btn:hover{color:var(--paper);border-color:rgba(245,241,230,.6)}
+.pause-hint{font-size:11px;letter-spacing:.08em;color:rgba(245,241,230,.4);margin-top:2px}
 
 /* ============================================================
    结束

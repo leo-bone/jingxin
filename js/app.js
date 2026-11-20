@@ -66,8 +66,23 @@
     '感受这一次，属于你的宁静'
   ];
 
-  // 是否为真人语音引导（女声 / 男声）
-  function isGuideSound(s) { return s === 'guide3' || s === 'guide3m'; }
+  // 整套完整练习：音频本身即从头到尾的完整引导，时长随录音，播完即结束
+  // 时长由 mutagen 读取的真实秒数写入，界面进度与计时以音频为准
+  const FULL_PRACTICE = {
+    bodyscanf: { sec: 26 * 60 + 46, label: '身体扫描·女声' },
+    bodyscanm: { sec: 37 * 60 + 9,  label: '身体扫描·男声' },
+    sitting:   { sec: 34 * 60 + 50, label: '完整坐禅·引导' }
+  };
+  function isFullPractice(s) { return Object.prototype.hasOwnProperty.call(FULL_PRACTICE, s); }
+  // 当前会话总秒数：完整练习取录音时长，静坐取所选时长
+  function sessionTotal() {
+    return isFullPractice(state.sound) ? FULL_PRACTICE[state.sound].sec : state.minutes * 60;
+  }
+
+  // 是否为真人语音引导（3 分钟短引导 + 整套完整练习）：均由音频主导屏幕
+  function isGuideSound(s) {
+    return s === 'guide3' || s === 'guide3m' || isFullPractice(s);
+  }
 
   // 按会话时长抽取引导语序列：短时少句避免切换过密，长时铺满完整脉络
   function guidanceFor(minutes) {
@@ -84,7 +99,12 @@
   // ---------- 引擎实例 ----------
   const sceneEngine = new SceneEngine($('#scene'));
   const audio = new AudioEngine(function () {
-    // 真人引导播完：语音退场，中文引导语接管余下的静坐时间
+    // 整套完整练习播完：练习即圆满，直接结束本次
+    if (state._fullPractice) {
+      finishSession();
+      return;
+    }
+    // 3 分钟短引导播完：语音退场，中文引导语接管余下的静坐时间
     state.guideEnded = true;
     endGuidanceMode();
     updateSoundStatus();
@@ -106,6 +126,9 @@
   const SOUND_LABELS = {
     guide3: '正念引导·女声',
     guide3m: '正念引导·男声',
+    bodyscanf: '身体扫描·女声 · 27分钟',
+    bodyscanm: '身体扫描·男声 · 37分钟',
+    sitting: '完整坐禅·引导 · 35分钟',
     bowl: '颂钵',
     forest: '林风',
     water: '流水',
@@ -206,15 +229,23 @@
         const val = chip.dataset[key];
         state[({ scene: 'scene', min: 'minutes', breath: 'breath', sound: 'sound' })[key]] = transform ? transform(val) : val;
         if (key === 'scene') applyScene(val);
-        if (key === 'sound') {
-          // 设置页只记住选择，真正播放发生在点击「开始静坐」之后
-          audio.setType(val);
-          state.lastSound = val;
-          updateSoundIcon();
-          updateSoundStatus();
-        }
       });
     });
+  }
+
+  // 声音 / 整套练习共用：两组 chip 互斥，选择只记忆、不预播放
+  function selectSound(val) {
+    state.sound = val;
+    audio.setType(val);
+    state.lastSound = val;
+    $$('#sound-row .chip, #full-row .chip').forEach(c =>
+      c.classList.toggle('is-selected', c.dataset.sound === val));
+    // 整套练习时长随音频，置灰时长选择避免误解
+    const full = isFullPractice(val);
+    $('#duration-row').classList.toggle('is-locked', full);
+    $('#duration-note').textContent = full ? '整套练习时长随音频，无需另选' : '正念练习常用时长';
+    updateSoundIcon();
+    updateSoundStatus();
   }
   // 场景卡片单独绑定（非 chip 结构）
   $$('#scene-grid .scene-card').forEach(card => {
@@ -227,7 +258,9 @@
   });
   bindChips('#duration-row', 'min', v => parseInt(v, 10));
   bindChips('#breath-row', 'breath', null);
-  bindChips('#sound-row', 'sound', null);
+  $$('#sound-row .chip, #full-row .chip').forEach(chip => {
+    chip.addEventListener('click', () => selectSound(chip.dataset.sound));
+  });
 
   // 呼吸节奏切换时更新原理说明
   $$('#breath-row .chip').forEach(chip => {
@@ -266,7 +299,18 @@
     if (state.sound === 'off') {
       state.sound = state.lastSound || 'guide3';
       audio.setType(state.sound);
-      if (state.running && !state.paused) audio.resume();
+      if (state.running && !state.paused) {
+        audio.resume();
+        // 恢复真人引导：让音频重新接管屏幕，避免与中文引导语同时滚动
+        if (isGuideSound(state.sound)) {
+          state.guideActive = true;
+          state.guideEnded = false;
+          const hint = state.sound === 'sitting' ? '跟着声音，走完这一坐'
+            : isFullPractice(state.sound) ? '跟着声音，觉察身体'
+            : '跟着声音，回到呼吸';
+          setGuidance(hint, true);
+        }
+      }
     } else {
       state.lastSound = state.sound;
       state.sound = 'off';
@@ -274,7 +318,7 @@
       // 手动静音真人引导时，把引导话语权交还给屏幕，避免静默到底
       if (state.guideActive) endGuidanceMode();
     }
-    $$('#sound-row .chip').forEach(c => c.classList.toggle('is-selected', c.dataset.sound === state.sound));
+    $$('#sound-row .chip, #full-row .chip').forEach(c => c.classList.toggle('is-selected', c.dataset.sound === state.sound));
     updateSoundIcon();
     updateSoundStatus();
   });
@@ -287,7 +331,11 @@
   }
 
   function startSession() {
-    const total = state.minutes * 60;
+    // 完整练习时长以录音为准（忽略时长 chip）；普通静坐用所选时长
+    const full = isFullPractice(state.sound);
+    const total = sessionTotal();
+    state._fullPractice = full;       // 锁定会话类型，避免中途静音 sound→off 后判定漂移
+    state._sessionTotal = total;      // 锁定会话总时长，静音/结束都按此走
     state.running = true;
     state.paused = false;
     state.elapsed = 0;
@@ -308,7 +356,10 @@
     state.guideEnded = false;
     state.guideActive = isGuideSound(state.sound) && state.sound !== 'off';
     // 真人引导主导时，屏幕只给一句静态提示，让位给语音；否则用中文引导语陪伴
-    setGuidance(state.guideActive ? '跟着声音，回到呼吸' : state._guidanceSeq[0], true);
+    const guideHint = full
+      ? (state.sound === 'sitting' ? '跟着声音，走完这一坐' : '跟着声音，觉察身体')
+      : '跟着声音，回到呼吸';
+    setGuidance(state.guideActive ? guideHint : state._guidanceSeq[0], true);
     updateSoundIcon();
     updateSoundStatus();
 
@@ -338,6 +389,7 @@
   }
 
   function finishSession() {
+    if (!state.running) return; // 防止音频结束与计时到点同帧重复结算
     state.running = false;
     state.paused = false;
     state.guideActive = false;
@@ -361,7 +413,7 @@
     state.guideActive = false;
     if (!state.running) return;
     const seq = state._guidanceSeq;
-    const total = state.minutes * 60;
+    const total = state._sessionTotal || sessionTotal();
     const ratio = Math.min(state.elapsed / total, 1);
     const gi = Math.min(Math.floor(ratio * seq.length), seq.length - 1);
     state._guidanceIndex = gi;
@@ -431,7 +483,7 @@
     if (state.running && !state.paused) {
       state.elapsed += dt / 1000;
       state.breathElapsed += dt / 1000;
-      const total = state.minutes * 60;
+      const total = state._sessionTotal || sessionTotal();
       const cfg = BREATH[state.breath];
       const info = breathInfo(state.breathElapsed, cfg);
       breath = info.scale;

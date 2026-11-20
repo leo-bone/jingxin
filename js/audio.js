@@ -11,6 +11,9 @@
   var FILES = {
     guide3: 'assets/audio/guide3_female.mp3',
     guide3m: 'assets/audio/guide3_male.mp3',
+    bodyscanf: 'assets/audio/bodyscan_female.mp3',
+    bodyscanm: 'assets/audio/bodyscan_male.mp3',
+    sitting: 'assets/audio/sitting_full.mp3',
     bowl: 'assets/audio/bowl.mp3',
     forest: 'assets/audio/forest.mp3',
     water: 'assets/audio/stream.mp3',
@@ -23,6 +26,9 @@
   var LEVELS = {
     guide3: 0.9,
     guide3m: 0.9,
+    bodyscanf: 0.9,
+    bodyscanm: 0.9,
+    sitting: 0.9,
     bowl: 0.52,
     forest: 0.62,
     water: 0.60,
@@ -32,7 +38,11 @@
     life: 0.42
   };
 
-  function isGuide(type) { return type === 'guide3' || type === 'guide3m'; }
+  // 真人语音引导（含整套完整练习）：有限时长、不循环、播完触发 onGuideEnd
+  function isGuide(type) {
+    return type === 'guide3' || type === 'guide3m' ||
+           type === 'bodyscanf' || type === 'bodyscanm' || type === 'sitting';
+  }
 
   function normalize(type) {
     return Object.prototype.hasOwnProperty.call(FILES, type) ? type : 'guide3';

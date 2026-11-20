@@ -179,6 +179,9 @@ body.mode-session .scene-veil{background:radial-gradient(ellipse at 50% 45%,tran
 }
 .chip:hover{border-color:var(--jade);color:var(--ink)}
 .chip.is-selected{background:var(--jade-deep);border-color:var(--jade-deep);color:var(--paper)}
+/* 整套练习：时长随音频，时长行锁定为不可选 */
+.chip-row.is-locked{opacity:.42;pointer-events:none;filter:saturate(.5)}
+.chip-row.is-locked .chip.is-selected{background:transparent;border-color:var(--line);color:var(--ink-faint)}
 .sound-credit{margin-top:10px;font-size:11px;line-height:1.6;color:var(--ink-faint)}
 .sound-credit a{color:var(--jade-deep);text-decoration:underline;text-underline-offset:2px}
 

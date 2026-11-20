@@ -12,6 +12,7 @@
 - 正念时长：3、5、10、15、20 分钟。
 - 呼吸节奏（以放松为目标，遵循「呼气不短于吸气」）：深呼吸（吸 4 / 呼 6）、共振呼吸（吸 5 / 呼 5）、4-7-8（吸 4 / 停 7 / 呼 8）、箱式（吸 4 / 停 4 / 呼 4 / 停 4）。每项附原理说明。
 - 声音选择：真人正念引导（女声 / 男声，各约 3 分钟）、颂钵、林风、流水、海浪、虫鸣、鸟鸣、生活声。设置页只选择不发声，点击「开始静坐」后才播放。
+- 整套完整练习：身体扫描（女声 27′ / 男声 37′）、完整坐禅引导（35′）。这类是**从头到尾的完整引导**，时间充裕时练习；选择后时长自动跟随音频、时长选项置灰，音频播完即自然结束，无需自行计时。
 - 会话中可随时暂停、静音或结束；支持键盘快捷键：空格暂停/继续、Esc 结束（闭眼练习时无需看屏幕）。
 - 真人语音引导与屏幕中文引导语互斥：引导播放期间只显示一句静态提示，播完后中文引导语按进度接管，避免中英两套引导同时干扰。手动静音引导时同样交还给文字陪伴。
 - 结束后记录今日次数与连续天数，数据只存在浏览器 localStorage。
@@ -31,6 +32,16 @@
 
 选择超过 3 分钟的静坐时，引导播完后会在界面提示「引导结束，余下时间留给自己」，不会循环朗读；此后由屏幕中文引导语接续陪伴，不留空白。引导全程英文语音主导，屏幕只显示一句「跟着声音，回到呼吸」，不与中文引导语同时滚动。
 
+### 整套完整练习（身体扫描 / 完整坐禅）
+
+为时间充裕、想从头到尾练完一整套的人准备，同样来自 The Free Mindfulness Project，**CC BY-NC-SA 3.0**：
+
+- 身体扫描·女声 `sound=bodyscanf`：*Body Scan*，Christina，**26:46**。躺着或坐着均可，把觉察依次带到身体各处，培养温和不评判的身体觉知。
+- 身体扫描·男声 `sound=bodyscanm`：*Body Scan*，Paddy，**37:09**。更长的身体扫描，适合慢慢走完全身。
+- 完整坐禅·引导 `sound=sitting`：*Sitting Meditation*，Peter，**34:50**。从呼吸到身体、声音，再到念头与情绪，走一整套 MBSR 风格的正念静坐。
+
+与 3 分钟短引导的关键区别：**这类音频本身就是完整练习**，所以会话时长直接取录音长度（`FULL_PRACTICE` 中写入的秒数），时钟与进度以音频为准，时长选项自动置灰；整段播完即判定本次圆满并进入结束页。屏幕同样只给一句静态提示，不与中文引导语叠加。手动静音后再开启，音频会重新接管屏幕。
+
 ### 关于中文 / 哈佛普通话版
 
 - 核实过哈佛 HUHS 官方的 3 / 4 分钟引导冥想，是电话热线 **Pause 4-calm**，不提供可再分发的音频文件：<https://wellness.huhs.harvard.edu/mindfulness-and-meditation>
@@ -47,6 +58,9 @@
 | --- | --- | --- | --- | --- |
 | 正念引导·女声 | `assets/audio/guide3_female.mp3` | Three Step Breathing Space，2:52 | [The Free Mindfulness Project](https://www.freemindfulness.org/download)，Christina | CC BY-NC-SA 3.0 |
 | 正念引导·男声 | `assets/audio/guide3_male.mp3` | 3 Minute Breathing Space，3:17 | [The Free Mindfulness Project](https://www.freemindfulness.org/download)，Peter | CC BY-NC-SA 3.0 |
+| 身体扫描·女声 | `assets/audio/bodyscan_female.mp3` | Body Scan，26:46 | [The Free Mindfulness Project](https://player.freemindfulness.org)，Christina | CC BY-NC-SA 3.0 |
+| 身体扫描·男声 | `assets/audio/bodyscan_male.mp3` | Body Scan，37:09 | [The Free Mindfulness Project](https://player.freemindfulness.org)，Paddy | CC BY-NC-SA 3.0 |
+| 完整坐禅·引导 | `assets/audio/sitting_full.mp3` | Sitting Meditation，34:50 | [The Free Mindfulness Project](https://player.freemindfulness.org)，Peter | CC BY-NC-SA 3.0 |
 | 颂钵 | `assets/audio/bowl.mp3` | 31 秒铜钵长音，适合循环 | [Tibetan singing bowl for meditation](https://freesound.org/s/436935)，franciscoguerrero | CC0 1.0 |
 | 林风 | `assets/audio/forest.mp3` | 德国林间夏夜环境声 | [Waidachswald Oberschefflenz Abend](https://commons.wikimedia.org/wiki/File:Waidachswald_Oberschefflenz_Abend_20250616_2005.ogg)，Evillan | CC0 1.0 |
 | 流水 | `assets/audio/stream.mp3` | 近场溪流声 | [Soft stream flowing water](https://commons.wikimedia.org/wiki/File:433589_jackthemurray_stream-river-water-up-close.wav)，jackthemurray | CC0 1.0 |

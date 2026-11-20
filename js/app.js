@@ -19,6 +19,7 @@
     sound: 'guide3',
     lastSound: 'guide3',
     guideEnded: false,
+    soundLabel: '',
     // 会话运行态
     running: false,
     paused: false,
@@ -27,10 +28,23 @@
     breathElapsed: 0,  // 当前呼吸循环内已过秒数
   };
 
-  // 呼吸节奏定义（秒）
+  // 呼吸节奏定义（秒）——以放松为目标，遵循"呼气≥吸气"原则
+  // calm   深呼吸：呼气长于吸气，激活副交感神经，最通用的放松法
+  // cohere 共振呼吸：5-5 约每分钟6次，接近 HRV 共振频率，稳定心率
+  // relax  4-7-8：经典助眠放松法（Dr. Andrew Weil），长呼气+停顿
+  // box    箱式呼吸：4-4-4-4，偏稳定专注，同样有助镇定
   const BREATH = {
-    calm: { phases: [['吸气', 4], ['停留', 2], ['呼气', 6]], cycle: 12 },
-    box: { phases: [['吸气', 4], ['停留', 4], ['呼气', 4], ['停留', 4]], cycle: 16 }
+    calm:   { phases: [['吸气', 4], ['呼气', 6]], cycle: 10 },
+    cohere: { phases: [['吸气', 5], ['呼气', 5]], cycle: 10 },
+    relax:  { phases: [['吸气', 4], ['停留', 7], ['呼气', 8]], cycle: 19 },
+    box:    { phases: [['吸气', 4], ['停留', 4], ['呼气', 4], ['停留', 4]], cycle: 16 }
+  };
+
+  const BREATH_NOTES = {
+    calm: '深呼吸：呼气长于吸气，可激活副交感神经，让心率放缓、身体放松。',
+    cohere: '共振呼吸：约每分钟 6 次，接近心率变异性的共振频率，有助稳定与平和。',
+    relax: '4-7-8 呼吸：经典的助眠放松法，用较长的呼气与停顿带走紧张；若憋气不适，可缩短停留。',
+    box: '箱式呼吸：四段等长，常用于稳定情绪、集中注意，呼吸不适时可改选深呼吸。'
   };
 
   // 正念引导语：一条完整的练习脉络（按会话进度分配）
@@ -71,17 +85,22 @@
     updateSoundStatus();
   });
 
-  // 场景 → 真实照片（暖金色调写实山水；无图场景自动回退程序化绘制）
+  // 场景 → 真实照片（写实环境；无图场景自动回退程序化绘制）
   const PHOTOS = {
     forest: 'assets/forest.jpg',
     snow:   'assets/snow.jpg',
     ocean:  'assets/ocean.jpg',
     temple: 'assets/temple.jpg',
-    river:  'assets/river.jpg'
+    river:  'assets/river.jpg',
+    space:  'assets/space.jpg',
+    mars:   'assets/mars.jpg',
+    hearth: 'assets/hearth.jpg',
+    antarctica: 'assets/antarctica.jpg'
   };
 
   const SOUND_LABELS = {
-    guide3: '3分钟正念引导',
+    guide3: '正念引导·女声',
+    guide3m: '正念引导·男声',
     bowl: '颂钵',
     forest: '林风',
     water: '流水',
@@ -205,6 +224,14 @@
   bindChips('#breath-row', 'breath', null);
   bindChips('#sound-row', 'sound', null);
 
+  // 呼吸节奏切换时更新原理说明
+  $$('#breath-row .chip').forEach(chip => {
+    chip.addEventListener('click', () => {
+      const note = $('#breath-note');
+      if (note) note.textContent = BREATH_NOTES[chip.dataset.breath] || '';
+    });
+  });
+
   function updateSoundIcon() {
     $('#sound-icon').textContent = (state.sound === 'off') ? '静' : '声';
     $('#btn-sound').setAttribute('aria-label', state.sound === 'off' ? '开启声音' : '静音');
@@ -213,7 +240,7 @@
   function updateSoundStatus() {
     if (state.sound === 'off') {
       $('#sound-status').textContent = '已静音';
-    } else if (state.sound === 'guide3' && state.guideEnded) {
+    } else if ((state.sound === 'guide3' || state.sound === 'guide3m') && state.guideEnded) {
       $('#sound-status').textContent = '引导结束，余下时间留给自己';
     } else {
       $('#sound-status').textContent = SOUND_LABELS[state.sound] || '声音';

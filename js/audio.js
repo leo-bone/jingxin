@@ -1,5 +1,6 @@
 /* ============================================================
-   audio.js — 真实录音与原创普通话引导音轨
+   audio.js — 真人正念引导与环境声
+   引导音频来自 The Free Mindfulness Project（CC BY-NC-SA 3.0）
    所有声音文件均在本站 assets/audio/，来源与授权见 README.md
    设置页只选择、不发声；点击「开始静坐」后才播放
    暴露 window.AudioEngine
@@ -8,7 +9,8 @@
   'use strict';
 
   var FILES = {
-    guide3: 'assets/audio/guide3.m4a',
+    guide3: 'assets/audio/guide3_female.mp3',
+    guide3m: 'assets/audio/guide3_male.mp3',
     bowl: 'assets/audio/bowl.mp3',
     forest: 'assets/audio/forest.mp3',
     water: 'assets/audio/stream.mp3',
@@ -19,7 +21,8 @@
   };
 
   var LEVELS = {
-    guide3: 0.88,
+    guide3: 0.9,
+    guide3m: 0.9,
     bowl: 0.52,
     forest: 0.62,
     water: 0.60,
@@ -28,6 +31,8 @@
     birds: 0.52,
     life: 0.42
   };
+
+  function isGuide(type) { return type === 'guide3' || type === 'guide3m'; }
 
   function normalize(type) {
     return Object.prototype.hasOwnProperty.call(FILES, type) ? type : 'guide3';
@@ -51,10 +56,10 @@
     var self = this;
     var audio = new Audio(FILES[type]);
     audio.preload = 'auto';
-    audio.loop = (type !== 'guide3');
+    audio.loop = !isGuide(type);
     audio.volume = 0;
     audio.addEventListener('ended', function () {
-      if (self.current === audio && type === 'guide3' && self.onGuideEnd) {
+      if (self.current === audio && isGuide(type) && self.onGuideEnd) {
         self.onGuideEnd();
       }
     });

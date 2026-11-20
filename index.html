@@ -5,12 +5,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="theme-color" content="#0f1a1c">
 <title>栖山 · 留一段时间给自己安静</title>
-<meta name="description" content="栖山——一处无需注册、不说话的在线静心空间。选一处山水，跟着呼吸，安静坐一会儿。">
+<meta name="description" content="栖山——一处无需注册、不说话的在线静心空间。择一处环境，跟着呼吸，安静坐一会儿。">
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <!-- 社交分享（微信/朋友圈/微博）缩略图与标题，绝对地址指向正式域名 -->
 <meta property="og:type" content="website">
 <meta property="og:title" content="栖山 · 留一段时间给自己安静">
-<meta property="og:description" content="一处不注册、不说话的在线静心空间。选一处山水，跟着呼吸，坐一会儿就好。">
+<meta property="og:description" content="一处不注册、不说话的在线静心空间。择一处环境，跟着呼吸，坐一会儿就好。">
 <meta property="og:image" content="https://jingxin.uichain.org/assets/forest.jpg">
 <meta property="og:url" content="https://jingxin.uichain.org/">
 <meta name="twitter:card" content="summary_large_image">
@@ -35,8 +35,8 @@
       <span class="brand-name">栖山</span>
     </div>
     <h1 class="intro-title">留一段时间<span class="dot">，</span><br>给自己安静</h1>
-    <p class="intro-sub">一处不注册、不说话的在线静心空间。<br>选一处山水，跟着呼吸，坐一会儿就好。</p>
-    <button class="btn btn--primary" id="btn-enter">进入山林 <span class="arrow">→</span></button>
+    <p class="intro-sub">一处不注册、不说话的在线静心空间。<br>择一处环境，跟着呼吸，坐一会儿就好。</p>
+    <button class="btn btn--primary" id="btn-enter">进入栖山 <span class="arrow">→</span></button>
     <p class="intro-hint">无需下载 · 无需登录 · 免费</p>
   </div>
 </section>
@@ -53,7 +53,7 @@
     </header>
 
     <div class="field">
-      <div class="field-label"><span>山水</span><span class="field-note">静心时映入眼帘的风景</span></div>
+      <div class="field-label"><span>环境</span><span class="field-note">静心时置身其中的空间</span></div>
       <div class="scene-grid" id="scene-grid">
         <button class="scene-card is-selected" data-scene="forest">
           <span class="scene-thumb" style="background-image:url('assets/forest.jpg')" aria-hidden="true"></span>
@@ -80,6 +80,26 @@
           <span class="scene-card-name">山水</span>
           <span class="scene-card-desc">水墨层峦</span>
         </button>
+        <button class="scene-card" data-scene="space">
+          <span class="scene-thumb" style="background-image:url('assets/space.jpg')" aria-hidden="true"></span>
+          <span class="scene-card-name">太空</span>
+          <span class="scene-card-desc">地轨晨曦</span>
+        </button>
+        <button class="scene-card" data-scene="mars">
+          <span class="scene-thumb" style="background-image:url('assets/mars.jpg')" aria-hidden="true"></span>
+          <span class="scene-card-name">火星</span>
+          <span class="scene-card-desc">赤色荒原</span>
+        </button>
+        <button class="scene-card" data-scene="hearth">
+          <span class="scene-thumb" style="background-image:url('assets/hearth.jpg')" aria-hidden="true"></span>
+          <span class="scene-card-name">炉边</span>
+          <span class="scene-card-desc">松火夜坐</span>
+        </button>
+        <button class="scene-card" data-scene="antarctica">
+          <span class="scene-thumb" style="background-image:url('assets/antarctica.jpg')" aria-hidden="true"></span>
+          <span class="scene-card-name">南极</span>
+          <span class="scene-card-desc">极光冰原</span>
+        </button>
       </div>
     </div>
 
@@ -95,17 +115,21 @@
     </div>
 
     <div class="field">
-      <div class="field-label"><span>呼吸节奏</span><span class="field-note">跟随光晕，一起一伏</span></div>
+      <div class="field-label"><span>呼吸节奏</span><span class="field-note">呼气比吸气长，身体更易放松</span></div>
       <div class="chip-row" id="breath-row">
-        <button class="chip is-selected" data-breath="calm">舒缓 · 吸4 停2 呼6</button>
+        <button class="chip is-selected" data-breath="calm">深呼吸 · 吸4 呼6</button>
+        <button class="chip" data-breath="cohere">共振 · 吸5 呼5</button>
+        <button class="chip" data-breath="relax">4-7-8 · 吸4 停7 呼8</button>
         <button class="chip" data-breath="box">箱式 · 吸4 停4 呼4 停4</button>
       </div>
+      <p class="sound-credit" id="breath-note">深呼吸：呼气长于吸气，可激活副交感神经，让心率放缓、身体放松。</p>
     </div>
 
     <div class="field">
       <div class="field-label"><span>声音</span><span class="field-note">选择后，开始静坐时播放；可随时静音</span></div>
       <div class="chip-row" id="sound-row">
-        <button class="chip is-selected" data-sound="guide3">3分钟正念引导</button>
+        <button class="chip is-selected" data-sound="guide3">正念引导·女声</button>
+        <button class="chip" data-sound="guide3m">正念引导·男声</button>
         <button class="chip" data-sound="bowl">颂钵</button>
         <button class="chip" data-sound="forest">林风</button>
         <button class="chip" data-sound="water">流水</button>
@@ -114,7 +138,7 @@
         <button class="chip" data-sound="birds">鸟鸣</button>
         <button class="chip" data-sound="life">生活声</button>
       </div>
-      <p class="sound-credit">环境声为真实田野录音，来源与授权见 <a href="https://github.com/leo-bone/jingxin#音频来源与授权" target="_blank" rel="noopener">项目说明</a>。</p>
+      <p class="sound-credit">正念引导为真人录音，来自 <a href="https://www.freemindfulness.org/download" target="_blank" rel="noopener">The Free Mindfulness Project</a>（Christina / Peter，CC BY-NC-SA 3.0）；环境声为真实田野录音。完整出处与授权见 <a href="https://github.com/leo-bone/jingxin#音频来源与授权" target="_blank" rel="noopener">项目说明</a>。</p>
     </div>
 
     <button class="btn btn--primary btn--wide" id="btn-start">开始静坐 <span class="arrow">→</span></button>

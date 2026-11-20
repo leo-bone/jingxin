@@ -1,6 +1,6 @@
 # 栖山 · 在线静心空间
 
-一处不注册、不聊天、不推送、不设任务的在线静心空间。选择一处山水，跟着呼吸，安静坐一会儿。
+一处不注册、不聊天、不推送、不设任务的在线静心空间。选择一处环境，跟着呼吸，安静坐一会儿。
 
 - 正式站点：<https://jingxin.uichain.org>
 - 源码仓库：<https://github.com/leo-bone/jingxin>
@@ -8,39 +8,43 @@
 
 ## 功能
 
-- 五处场景：雾林、金山、沧海、古刹、山水。写实背景图负责真实感，Canvas 负责呼吸光晕、浮尘与薄雾。
+- 九处环境：雾林、金山、沧海、古刹、山水、太空、火星、炉边、南极。写实背景图负责真实感与空间氛围，Canvas 负责呼吸光晕、浮尘与薄雾；不同环境配有各自的粒子密度与光色。
 - 正念时长：3、5、10、15、20 分钟。
-- 呼吸节奏：舒缓（吸 4 / 停 2 / 呼 6）、箱式（吸 4 / 停 4 / 呼 4 / 停 4）。
-- 声音选择：3 分钟普通话正念引导、颂钵、林风、流水、海浪、虫鸣、鸟鸣、生活声。设置页只选择不发声，点击「开始静坐」后才播放。
+- 呼吸节奏（以放松为目标，遵循「呼气不短于吸气」）：深呼吸（吸 4 / 呼 6）、共振呼吸（吸 5 / 呼 5）、4-7-8（吸 4 / 停 7 / 呼 8）、箱式（吸 4 / 停 4 / 呼 4 / 停 4）。每项附原理说明。
+- 声音选择：真人正念引导（女声 / 男声，各约 3 分钟）、颂钵、林风、流水、海浪、虫鸣、鸟鸣、生活声。设置页只选择不发声，点击「开始静坐」后才播放。
 - 会话中可随时暂停、静音或结束；结束后记录今日次数与连续天数，数据只存在浏览器 localStorage。
 - 尊重系统「减少动态效果」设置；引导语使用 `aria-live` 播报。
 - 明确声明为放松与专注练习工具，不构成医疗诊断或心理治疗。
 
 ## 声音说明
 
-### 3 分钟普通话正念引导
+### 3 分钟真人正念引导（女声 / 男声）
 
-`sound=guide3` 是本项目的原创引导音轨，时长约 3 分 01 秒。文案见 [assets/audio/guide3.txt](assets/audio/guide3.txt)，由 Apple `Ting-Ting` 普通话语音在本地合成，项目不引入任何第三方课程录音的版权风险。
+原先使用的普通话合成语音因听感生硬已弃用，改为**真人引导录音**，来自国际公开的正念音频库 **The Free Mindfulness Project**：
 
-选择超过 3 分钟的静坐时，引导结束后会在界面提示「引导结束，余下时间留给自己」，不会循环朗读。
+- 女声 `sound=guide3`：*Three Step Breathing Space*，Christina，**2:52**
+- 男声 `sound=guide3m`：*3 Minute Breathing Space*，Peter，**3:17**
 
-### 关于「哈佛女生普通话版」
+两者都是「三步呼吸空间」练习：觉察身体与情绪 → 把注意力收到呼吸 → 将觉察扩展至全身。授权为 **CC BY-NC-SA 3.0**，允许非商业再分发，本站为非商业、免费项目，符合授权条件；署名信息见下方授权表与设置页出处链接。
 
-没有把来源不明的哈佛/中文课程音频直接放进仓库。核实结果：
+选择超过 3 分钟的静坐时，引导播完后会在界面提示「引导结束，余下时间留给自己」，不会循环朗读。
 
-- 哈佛 HUHS 官方提供 3 / 4 分钟引导冥想的电话热线 **Pause 4-calm**，但不提供可再分发的音频文件：<https://wellness.huhs.harvard.edu/mindfulness-and-meditation>
-- 国际公开、授权清晰的正念音频库 Free Mindfulness Project 有 3 分钟呼吸练习，但为英语，且采用 CC BY-NC-SA：<https://www.freemindfulness.org/download>
+### 关于中文 / 哈佛普通话版
+
+- 核实过哈佛 HUHS 官方的 3 / 4 分钟引导冥想，是电话热线 **Pause 4-calm**，不提供可再分发的音频文件：<https://wellness.huhs.harvard.edu/mindfulness-and-meditation>
 - 中文「哈佛正念」课程多为付费或有明确传播限制，不适合作为本站静态资源分发。
+- Free Mindfulness Project 的授权清晰、可合法分发，但引导为英语。为兼顾听感与合规，本站采用其真人英语录音，未使用任何来源不明的中文课程音频。
 
-如果后续拿到明确可再分发的原始授权，可在 `js/audio.js` 的 `FILES` 中替换 `guide3` 指向的文件，并在下方授权表补记来源。
+如果后续拿到明确可再分发的中文真人授权，可在 `js/audio.js` 的 `FILES` 中替换 `guide3` / `guide3m` 指向的文件，并在下方授权表补记来源。
 
 ### 音频来源与授权
 
-音频文件来自 Wikimedia Commons 的公开转码与 Freesound 的公开预览，仅重命名、未在内容上二次剪辑；播放音量在代码中按场景做了平衡。
+环境声来自 Wikimedia Commons 的公开转码与 Freesound 的公开预览，引导来自 The Free Mindfulness Project 自建音频 CDN；均仅重命名、未在内容上二次剪辑，播放音量在代码中做了平衡。
 
 | 选项 | 本地文件 | 内容 | 作者 / 来源 | 授权 |
 | --- | --- | --- | --- | --- |
-| 3分钟正念引导 | `assets/audio/guide3.m4a` | 本项目原创普通话引导 | [引导文案](assets/audio/guide3.txt)，Apple Ting-Ting 本地合成 | 原创 |
+| 正念引导·女声 | `assets/audio/guide3_female.mp3` | Three Step Breathing Space，2:52 | [The Free Mindfulness Project](https://www.freemindfulness.org/download)，Christina | CC BY-NC-SA 3.0 |
+| 正念引导·男声 | `assets/audio/guide3_male.mp3` | 3 Minute Breathing Space，3:17 | [The Free Mindfulness Project](https://www.freemindfulness.org/download)，Peter | CC BY-NC-SA 3.0 |
 | 颂钵 | `assets/audio/bowl.mp3` | 31 秒铜钵长音，适合循环 | [Tibetan singing bowl for meditation](https://freesound.org/s/436935)，franciscoguerrero | CC0 1.0 |
 | 林风 | `assets/audio/forest.mp3` | 德国林间夏夜环境声 | [Waidachswald Oberschefflenz Abend](https://commons.wikimedia.org/wiki/File:Waidachswald_Oberschefflenz_Abend_20250616_2005.ogg)，Evillan | CC0 1.0 |
 | 流水 | `assets/audio/stream.mp3` | 近场溪流声 | [Soft stream flowing water](https://commons.wikimedia.org/wiki/File:433589_jackthemurray_stream-river-water-up-close.wav)，jackthemurray | CC0 1.0 |
@@ -49,9 +53,11 @@
 | 鸟鸣 | `assets/audio/birds.mp3` | 芬兰森林乌鸫鸣唱，维基百科精选声音 | [Turdus merula 2.ogg](https://commons.wikimedia.org/wiki/File:Turdus_merula_2.ogg)，Oona Räisänen (Mysid) | Public domain |
 | 生活声 | `assets/audio/life.mp3` | 咖啡馆人声、咖啡机与餐具轻响 | [Cafe ambient sound](https://freesound.org/people/evsecrets/sounds/332271/)，evsecrets | CC0 1.0 |
 
-CC BY 3.0 条款：<https://creativecommons.org/licenses/by/3.0/>。CC0 1.0 条款：<https://creativecommons.org/publicdomain/zero/1.0/>。
+CC BY-NC-SA 3.0 条款：<https://creativecommons.org/licenses/by-nc-sa/3.0/>。CC BY 3.0 条款：<https://creativecommons.org/licenses/by/3.0/>。CC0 1.0 条款：<https://creativecommons.org/publicdomain/zero/1.0/>。
 
-背景照片为 AI 生成的写实场景，仅用于视觉氛围，不代表真实地点。
+### 场景照片
+
+九处环境背景均为 AI 生成的写实场景，仅用于视觉氛围，不代表真实地点；画面右下角的生成标记已通过裁切去除。各环境的 Canvas 动态层参数见 `js/scenes.js` 的 `PHOTO_OVERLAY`：太空、南极粒子更稀疏以突出空旷，火星偏赤色浮尘，炉边偏暖金光晕。
 
 ## 本地运行
 
@@ -75,8 +81,9 @@ jingxin/
 │   └── scenes.js           # Canvas 动态叠加与无图回退
 └── assets/
     ├── forest.jpg snow.jpg ocean.jpg temple.jpg river.jpg
+    ├── space.jpg mars.jpg hearth.jpg antarctica.jpg
     └── audio/
-        ├── guide3.m4a guide3.txt
+        ├── guide3_female.mp3 guide3_male.mp3
         └── bowl.mp3 forest.mp3 stream.mp3 waves.mp3
             insects.mp3 birds.mp3 life.mp3
 ```
@@ -91,16 +98,7 @@ jingxin/
 2. `git add . && git commit -m "描述" && git push`。
 3. 将仓库根目录文件上传到 Cloudflare Pages 生产部署。
 
-使用 Cloudflare Pages Direct Upload API 时，manifest 的 key 必须以 `/` 开头，例如 `/index.html`、`/assets/audio/guide3.m4a`；缺少前导斜杠会导致部署后 404。
-
-## 重新生成引导音频
-
-```bash
-cd assets/audio
-say -v Ting-Ting -r 162 -f guide3.txt -o guide3.aiff
-afconvert -f m4af -d aac -b 64000 -q 127 guide3.aiff guide3.m4a
-rm guide3.aiff
-```
+使用 Cloudflare Pages Direct Upload API 时，manifest 的 key 必须以 `/` 开头，例如 `/index.html`、`/assets/audio/guide3_female.mp3`；缺少前导斜杠会导致部署后 404。
 
 ## 隐私与合规
 

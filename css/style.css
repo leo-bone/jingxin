@@ -148,7 +148,7 @@ body.mode-session .scene-veil{background:radial-gradient(ellipse at 50% 45%,tran
 .field-note{font-size:12px;color:var(--ink-faint)}
 
 /* 场景卡片 */
-.scene-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}
+.scene-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
 .scene-card{
   position:relative;border:1px solid var(--line);background:rgba(255,255,255,.35);
   border-radius:4px;padding:0 0 11px;cursor:pointer;overflow:hidden;
@@ -162,7 +162,7 @@ body.mode-session .scene-veil{background:radial-gradient(ellipse at 50% 45%,tran
   font-size:12px;display:flex;align-items:center;justify-content:center;
 }
 .scene-thumb{
-  display:block;height:62px;width:100%;margin-bottom:9px;
+  display:block;height:74px;width:100%;margin-bottom:9px;
   background-size:cover;background-position:center 42%;
   background-color:var(--paper-2);
 }

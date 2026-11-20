@@ -454,7 +454,11 @@
     snow:   { dust: 'rgba(255,235,190,1)', mist: 'rgba(235,238,242,1)', glow: 'rgba(255,220,160,' },
     ocean:  { dust: 'rgba(255,240,205,1)', mist: 'rgba(220,232,238,1)', glow: 'rgba(255,225,175,' },
     temple: { dust: 'rgba(255,226,170,1)', mist: 'rgba(232,222,200,1)', glow: 'rgba(255,214,150,' },
-    river:  { dust: 'rgba(245,242,220,1)', mist: 'rgba(232,236,228,1)', glow: 'rgba(255,238,200,' }
+    river:  { dust: 'rgba(245,242,220,1)', mist: 'rgba(232,236,228,1)', glow: 'rgba(255,238,200,' },
+    space:  { dust: 'rgba(200,220,255,1)', mist: 'rgba(120,150,210,1)', glow: 'rgba(150,185,255,', dustCount: 14, mistCount: 2 },
+    mars:   { dust: 'rgba(255,190,150,1)', mist: 'rgba(220,150,120,1)', glow: 'rgba(255,165,120,', dustCount: 40, mistCount: 10 },
+    hearth: { dust: 'rgba(255,205,140,1)', mist: 'rgba(255,190,120,1)', glow: 'rgba(255,170,90,', dustCount: 26, mistCount: 4 },
+    antarctica: { dust: 'rgba(225,240,255,1)', mist: 'rgba(200,225,245,1)', glow: 'rgba(170,215,255,', dustCount: 18, mistCount: 5 }
   };
 
   function SceneEngine(canvas) {
@@ -469,14 +473,15 @@
     this.resize();
   }
   SceneEngine.prototype.setScene = function (name, hasPhoto) {
-    if (!scenes[name]) return;
+    // 有照片的场景（含太空/火星/炉边/南极）走叠加层，无需程序化绘制函数
+    if (!scenes[name] && !PHOTO_OVERLAY[name]) return;
     this.current = name;
     this.hasPhoto = !!hasPhoto;
     if (this.hasPhoto) {
       const cfg = PHOTO_OVERLAY[name] || PHOTO_OVERLAY.forest;
       this.photoParticles = {
-        dust: new Particles('dust', 30),
-        mist: new Particles('mist', 9),
+        dust: new Particles('dust', cfg.dustCount || 30),
+        mist: new Particles('mist', cfg.mistCount || 9),
         cfg: cfg
       };
     } else {

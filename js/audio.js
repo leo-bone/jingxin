@@ -9,16 +9,18 @@
   'use strict';
 
   var FILES = {
-    guide3: 'assets/audio/guide3_female.mp3',
-    guide3m: 'assets/audio/guide3_male.mp3',
-    bodyscanf: 'assets/audio/bodyscan_female.mp3',
-    bodyscanm: 'assets/audio/bodyscan_male.mp3',
-    sitting: 'assets/audio/sitting_full.mp3',
+    guide3: 'assets/audio/guide3_female.mp3',      // 女声短引导 · English · Free Mindfulness
+    guide3m: 'assets/audio/guide3_cn.mp3',         // 男声短引导 · 普通话 · UCLA Mindful
+    bodyscanf: 'assets/audio/bodyscan_female.mp3', // 身体扫描 · 女声 English
+    bodyscanm: 'assets/audio/bodyscan_male.mp3',   // 身体扫描 · 男声 English
+    bodyscancn: 'assets/audio/bodyscan_cn.mp3',    // 身体扫描 · 普通话 · UCLA Mindful
+    sitting: 'assets/audio/sitting_full.mp3',      // 完整坐禅 · English
+    sittingcn: 'assets/audio/sitting_cn.mp3',      // 完整坐禅 · 普通话 · UCLA Mindful
     bowl: 'assets/audio/bowl.mp3',
-    forest: 'assets/audio/forest.mp3',
+    forest: 'assets/audio/forest.mp3',             // 林风：风吹树林
     water: 'assets/audio/stream.mp3',
     waves: 'assets/audio/waves.mp3',
-    insects: 'assets/audio/insects.mp3',
+    frogs: 'assets/audio/frogs.mp3',               // 蛙声（纯蛙鸣，替换原虫鸣）
     birds: 'assets/audio/birds.mp3',
     life: 'assets/audio/life.mp3'
   };
@@ -28,12 +30,14 @@
     guide3m: 0.9,
     bodyscanf: 0.9,
     bodyscanm: 0.9,
+    bodyscancn: 0.9,
     sitting: 0.9,
+    sittingcn: 0.9,
     bowl: 0.52,
     forest: 0.62,
     water: 0.60,
     waves: 0.58,
-    insects: 0.58,
+    frogs: 0.58,
     birds: 0.52,
     life: 0.42
   };
@@ -41,7 +45,8 @@
   // 真人语音引导（含整套完整练习）：有限时长、不循环、播完触发 onGuideEnd
   function isGuide(type) {
     return type === 'guide3' || type === 'guide3m' ||
-           type === 'bodyscanf' || type === 'bodyscanm' || type === 'sitting';
+           type === 'bodyscanf' || type === 'bodyscanm' || type === 'bodyscancn' ||
+           type === 'sitting' || type === 'sittingcn';
   }
 
   function normalize(type) {

@@ -25,6 +25,9 @@
 <div class="scene-veil" aria-hidden="true"></div>
 <div class="scene-grain" aria-hidden="true"></div>
 
+<!-- 语言切换：始终可见 -->
+<button class="lang-btn" id="btn-lang" data-i18n-aria="lang.aria" aria-label="Switch to English" title="中文 / English">EN</button>
+
 <!-- ============ 开场 ============ -->
 <section class="screen screen--intro is-active" id="screen-intro">
   <div class="intro-wrap">
@@ -32,12 +35,12 @@
       <span class="brand-mark" aria-hidden="true">
         <svg viewBox="0 0 64 64" fill="none"><path d="M8 46 L24 22 L34 36 L44 20 L56 46 Z" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"/><path d="M4 50 H60" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/><circle cx="44" cy="14" r="4" stroke="currentColor" stroke-width="2.2"/></svg>
       </span>
-      <span class="brand-name">栖山</span>
+      <span class="brand-name" data-i18n="intro.brand">栖山</span>
     </div>
-    <h1 class="intro-title">留一段时间<span class="dot">，</span><br>给自己安静</h1>
-    <p class="intro-sub">一处不注册、不说话的在线静心空间。<br>择一处环境，跟着呼吸，坐一会儿就好。</p>
-    <button class="btn btn--primary" id="btn-enter">进入栖山 <span class="arrow">→</span></button>
-    <p class="intro-hint">无需下载 · 无需登录 · 免费</p>
+    <h1 class="intro-title" data-i18n-html="intro.title">留一段时间<span class="dot">，</span><br>给自己安静</h1>
+    <p class="intro-sub" data-i18n-html="intro.sub">一处不注册、不说话的在线静心空间。<br>择一处环境，跟着呼吸，坐一会儿就好。</p>
+    <button class="btn btn--primary" id="btn-enter"><span data-i18n="intro.enter">进入栖山</span> <span class="arrow">→</span></button>
+    <p class="intro-hint" data-i18n="intro.hint">无需下载 · 无需登录 · 免费</p>
   </div>
 </section>
 
@@ -45,114 +48,116 @@
 <section class="screen screen--setup" id="screen-setup">
   <div class="panel setup-panel">
     <header class="panel-head">
-      <button class="icon-btn" id="btn-back" aria-label="返回">←</button>
+      <button class="icon-btn" id="btn-back" data-i18n-aria="btn.back" aria-label="返回">←</button>
       <div>
-        <h2 class="panel-title">择一处风景</h2>
-        <p class="panel-sub">选一个你喜欢的地方，安顿此刻的心</p>
+        <h2 class="panel-title" data-i18n="setup.title">择一处风景</h2>
+        <p class="panel-sub" data-i18n="setup.sub">选一个你喜欢的地方，安顿此刻的心</p>
       </div>
     </header>
 
     <div class="field">
-      <div class="field-label"><span>环境</span><span class="field-note">静心时置身其中的空间</span></div>
+      <div class="field-label"><span data-i18n="field.environment">环境</span><span class="field-note" data-i18n="field.environment.note">静心时置身其中的空间</span></div>
       <div class="scene-grid" id="scene-grid">
         <button class="scene-card is-selected" data-scene="forest">
           <span class="scene-thumb" style="background-image:url('assets/forest.jpg')" aria-hidden="true"></span>
-          <span class="scene-card-name">雾林</span>
-          <span class="scene-card-desc">松间晨雾</span>
+          <span class="scene-card-name" data-i18n="scene.forest.name">雾林</span>
+          <span class="scene-card-desc" data-i18n="scene.forest.desc">松间晨雾</span>
         </button>
         <button class="scene-card" data-scene="snow">
           <span class="scene-thumb" style="background-image:url('assets/snow.jpg')" aria-hidden="true"></span>
-          <span class="scene-card-name">金山</span>
-          <span class="scene-card-desc">日照雪岭</span>
+          <span class="scene-card-name" data-i18n="scene.snow.name">金山</span>
+          <span class="scene-card-desc" data-i18n="scene.snow.desc">日照雪岭</span>
         </button>
         <button class="scene-card" data-scene="ocean">
           <span class="scene-thumb" style="background-image:url('assets/ocean.jpg')" aria-hidden="true"></span>
-          <span class="scene-card-name">沧海</span>
-          <span class="scene-card-desc">海上生明</span>
+          <span class="scene-card-name" data-i18n="scene.ocean.name">沧海</span>
+          <span class="scene-card-desc" data-i18n="scene.ocean.desc">海上生明</span>
         </button>
         <button class="scene-card" data-scene="temple">
           <span class="scene-thumb" style="background-image:url('assets/temple.jpg')" aria-hidden="true"></span>
-          <span class="scene-card-name">古刹</span>
-          <span class="scene-card-desc">庭院深深</span>
+          <span class="scene-card-name" data-i18n="scene.temple.name">古刹</span>
+          <span class="scene-card-desc" data-i18n="scene.temple.desc">庭院深深</span>
         </button>
         <button class="scene-card" data-scene="river">
           <span class="scene-thumb" style="background-image:url('assets/river.jpg')" aria-hidden="true"></span>
-          <span class="scene-card-name">山水</span>
-          <span class="scene-card-desc">水墨层峦</span>
+          <span class="scene-card-name" data-i18n="scene.river.name">山水</span>
+          <span class="scene-card-desc" data-i18n="scene.river.desc">水墨层峦</span>
         </button>
         <button class="scene-card" data-scene="space">
           <span class="scene-thumb" style="background-image:url('assets/space.jpg')" aria-hidden="true"></span>
-          <span class="scene-card-name">太空</span>
-          <span class="scene-card-desc">地轨晨曦</span>
+          <span class="scene-card-name" data-i18n="scene.space.name">太空</span>
+          <span class="scene-card-desc" data-i18n="scene.space.desc">地轨晨曦</span>
         </button>
         <button class="scene-card" data-scene="mars">
           <span class="scene-thumb" style="background-image:url('assets/mars.jpg')" aria-hidden="true"></span>
-          <span class="scene-card-name">火星</span>
-          <span class="scene-card-desc">赤色荒原</span>
+          <span class="scene-card-name" data-i18n="scene.mars.name">火星</span>
+          <span class="scene-card-desc" data-i18n="scene.mars.desc">赤色荒原</span>
         </button>
         <button class="scene-card" data-scene="hearth">
           <span class="scene-thumb" style="background-image:url('assets/hearth.jpg')" aria-hidden="true"></span>
-          <span class="scene-card-name">炉边</span>
-          <span class="scene-card-desc">松火夜坐</span>
+          <span class="scene-card-name" data-i18n="scene.hearth.name">炉边</span>
+          <span class="scene-card-desc" data-i18n="scene.hearth.desc">松火夜坐</span>
         </button>
         <button class="scene-card" data-scene="antarctica">
           <span class="scene-thumb" style="background-image:url('assets/antarctica.jpg')" aria-hidden="true"></span>
-          <span class="scene-card-name">南极</span>
-          <span class="scene-card-desc">极光冰原</span>
+          <span class="scene-card-name" data-i18n="scene.antarctica.name">南极</span>
+          <span class="scene-card-desc" data-i18n="scene.antarctica.desc">极光冰原</span>
         </button>
       </div>
     </div>
 
     <div class="field">
-      <div class="field-label"><span>时长</span><span class="field-note" id="duration-note">正念练习常用时长</span></div>
+      <div class="field-label"><span data-i18n="field.duration">时长</span><span class="field-note" id="duration-note" data-i18n="field.duration.note">正念练习常用时长</span></div>
       <div class="chip-row" id="duration-row">
-        <button class="chip" data-min="3">3 分钟</button>
-        <button class="chip" data-min="5">5 分钟</button>
-        <button class="chip is-selected" data-min="10">10 分钟</button>
-        <button class="chip" data-min="15">15 分钟</button>
-        <button class="chip" data-min="20">20 分钟</button>
+        <button class="chip" data-min="3" data-i18n="duration.3">3 分钟</button>
+        <button class="chip" data-min="5" data-i18n="duration.5">5 分钟</button>
+        <button class="chip is-selected" data-min="10" data-i18n="duration.10">10 分钟</button>
+        <button class="chip" data-min="15" data-i18n="duration.15">15 分钟</button>
+        <button class="chip" data-min="20" data-i18n="duration.20">20 分钟</button>
       </div>
     </div>
 
     <div class="field">
-      <div class="field-label"><span>呼吸节奏</span><span class="field-note">呼气比吸气长，身体更易放松</span></div>
+      <div class="field-label"><span data-i18n="field.breath">呼吸节奏</span><span class="field-note" data-i18n="field.breath.note">呼气比吸气长，身体更易放松</span></div>
       <div class="chip-row" id="breath-row">
-        <button class="chip is-selected" data-breath="calm">深呼吸 · 吸4 呼6</button>
-        <button class="chip" data-breath="cohere">共振 · 吸5 呼5</button>
-        <button class="chip" data-breath="relax">4-7-8 · 吸4 停7 呼8</button>
-        <button class="chip" data-breath="box">箱式 · 吸4 停4 呼4 停4</button>
+        <button class="chip is-selected" data-breath="calm" data-i18n="breathLabel.calm">深呼吸 · 吸4 呼6</button>
+        <button class="chip" data-breath="cohere" data-i18n="breathLabel.cohere">共振 · 吸5 呼5</button>
+        <button class="chip" data-breath="relax" data-i18n="breathLabel.relax">4-7-8 · 吸4 停7 呼8</button>
+        <button class="chip" data-breath="box" data-i18n="breathLabel.box">箱式 · 吸4 停4 呼4 停4</button>
       </div>
-      <p class="sound-credit" id="breath-note">深呼吸：呼气长于吸气，可激活副交感神经，让心率放缓、身体放松。</p>
+      <p class="sound-credit" id="breath-note" data-i18n="breathNote.calm">深呼吸：呼气长于吸气，可激活副交感神经，让心率放缓、身体放松。</p>
     </div>
 
     <div class="field">
-      <div class="field-label"><span>声音</span><span class="field-note">选择后，开始静坐时播放；可随时静音</span></div>
+      <div class="field-label"><span data-i18n="field.sound">声音</span><span class="field-note" data-i18n="field.sound.note">选择后，开始静坐时播放；可随时静音</span></div>
       <div class="chip-row" id="sound-row">
-        <button class="chip is-selected" data-sound="guide3">正念引导·女声</button>
-        <button class="chip" data-sound="guide3m">正念引导·男声</button>
-        <button class="chip" data-sound="bowl">颂钵</button>
-        <button class="chip" data-sound="forest">林风</button>
-        <button class="chip" data-sound="water">流水</button>
-        <button class="chip" data-sound="waves">海浪</button>
-        <button class="chip" data-sound="insects">虫鸣</button>
-        <button class="chip" data-sound="birds">鸟鸣</button>
-        <button class="chip" data-sound="life">生活声</button>
+        <button class="chip is-selected" data-sound="guide3" data-i18n="sound.guide3">正念引导·女声 English</button>
+        <button class="chip" data-sound="guide3m" data-i18n="sound.guide3m">正念引导·男声 中文</button>
+        <button class="chip" data-sound="bowl" data-i18n="sound.bowl">颂钵</button>
+        <button class="chip" data-sound="forest" data-i18n="sound.forest">林风</button>
+        <button class="chip" data-sound="water" data-i18n="sound.water">流水</button>
+        <button class="chip" data-sound="waves" data-i18n="sound.waves">海浪</button>
+        <button class="chip" data-sound="frogs" data-i18n="sound.frogs">蛙声</button>
+        <button class="chip" data-sound="birds" data-i18n="sound.birds">鸟鸣</button>
+        <button class="chip" data-sound="life" data-i18n="sound.life">生活声</button>
       </div>
-      <p class="sound-credit">正念引导为真人录音，来自 <a href="https://www.freemindfulness.org/download" target="_blank" rel="noopener">The Free Mindfulness Project</a>（Christina / Peter，CC BY-NC-SA 3.0）；环境声为真实田野录音。完整出处与授权见 <a href="https://github.com/leo-bone/jingxin#音频来源与授权" target="_blank" rel="noopener">项目说明</a>。</p>
+      <p class="sound-credit" data-i18n="sound.credit">引导为真人录音：女声英语来自 The Free Mindfulness Project（CC BY-NC-SA 3.0），男声普通话与中文整套练习来自 UCLA Mindful（CC BY-NC-ND 4.0）；环境声为真实田野录音。完整出处与授权见项目说明。</p>
     </div>
 
     <div class="field">
-      <div class="field-label"><span>整套练习</span><span class="field-note">从始至终的完整引导，时间充裕时练习</span></div>
+      <div class="field-label"><span data-i18n="field.full">整套练习</span><span class="field-note" data-i18n="field.full.note">从始至终的完整引导，时间充裕时练习</span></div>
       <div class="chip-row" id="full-row">
-        <button class="chip" data-sound="bodyscanf">身体扫描·女声 · 27′</button>
-        <button class="chip" data-sound="bodyscanm">身体扫描·男声 · 37′</button>
-        <button class="chip" data-sound="sitting">完整坐禅·引导 · 35′</button>
+        <button class="chip" data-sound="bodyscanf" data-i18n="sound.bodyscanf">身体扫描·女声 · 27′</button>
+        <button class="chip" data-sound="bodyscanm" data-i18n="sound.bodyscanm">身体扫描·男声 · 37′</button>
+        <button class="chip" data-sound="bodyscancn" data-i18n="sound.bodyscancn">身体扫描·中文 · 4′</button>
+        <button class="chip" data-sound="sitting" data-i18n="sound.sitting">完整坐禅·引导 · 35′</button>
+        <button class="chip" data-sound="sittingcn" data-i18n="sound.sittingcn">完整坐禅·中文 · 17′</button>
       </div>
-      <p class="sound-credit" id="full-note">身体扫描躺着或坐着均可，把觉察依次带到身体各处；完整坐禅从呼吸、身体到声音与念头，走一整套正念练习。选择后时长自动跟随音频，无需另设。</p>
+      <p class="sound-credit" id="full-note" data-i18n="field.full.note2">身体扫描躺着或坐着均可，把觉察依次带到身体各处；完整坐禅从呼吸、身体到声音与念头，走一整套正念练习。选择后时长自动跟随音频，无需另设。</p>
     </div>
 
     <div class="field" id="gather-field">
-      <div class="field-label"><span>共坐一场</span><span class="field-note">与同一时段的人，一起开始、一起结束</span></div>
+      <div class="field-label"><span data-i18n="field.gather">共坐一场</span><span class="field-note" data-i18n="field.gather.note">与同一时段的人，一起开始、一起结束</span></div>
       <div class="gather-card">
         <div class="gather-info">
           <span class="gather-session" id="gather-session">本场共坐</span>
@@ -160,27 +165,27 @@
         </div>
         <div class="gather-count" id="gather-count">距本场结束 —</div>
       </div>
-      <p class="sound-credit">场次按公共时钟每 30 分钟一轮（整点 / 半点），同一时段的人算作同一场。此刻的人数为氛围演示值，非真实在线人数；留言只保存在你的浏览器，不上传。</p>
+      <p class="sound-credit" data-i18n="gather.credit">场次按公共时钟每 30 分钟一轮（整点 / 半点），同一时段的人算作同一场。此刻的人数为氛围演示值，非真实在线人数；留言只保存在你的浏览器，不上传。</p>
     </div>
 
-    <button class="btn btn--primary btn--wide" id="btn-start">开始静坐 <span class="arrow">→</span></button>
+    <button class="btn btn--primary btn--wide" id="btn-start"><span data-i18n="btn.start">开始静坐</span> <span class="arrow">→</span></button>
   </div>
 </section>
 
 <!-- ============ 静心中 ============ -->
 <section class="screen screen--session" id="screen-session">
   <div class="session-top">
-    <button class="icon-btn icon-btn--ghost" id="btn-pause" aria-label="暂停">
+    <button class="icon-btn icon-btn--ghost" id="btn-pause" data-i18n-aria="btn.pause" aria-label="暂停">
       <span class="pause-icon">Ⅱ</span>
     </button>
     <div class="session-meta">
       <div class="co-presence" id="co-presence">
         <span class="co-dot" aria-hidden="true"></span>
-        <span id="co-text">与众人同坐，不必言语</span>
+        <span id="co-text" data-i18n="gather.co.plain">与众人同坐，不必言语</span>
       </div>
       <div class="sound-status" id="sound-status" aria-live="polite">正念引导·女声</div>
     </div>
-    <button class="icon-btn icon-btn--ghost" id="btn-sound" aria-label="声音开关">
+    <button class="icon-btn icon-btn--ghost" id="btn-sound" data-i18n-aria="sound.mute" aria-label="声音开关">
       <span id="sound-icon">声</span>
     </button>
   </div>
@@ -189,28 +194,28 @@
     <div class="breath-halo" id="breath-halo" aria-hidden="true"></div>
     <div class="breath-ring" id="breath-ring" aria-hidden="true"></div>
     <div class="breath-center">
-      <span class="breath-label" id="breath-label" aria-live="polite">准备好了吗</span>
+      <span class="breath-label" id="breath-label" aria-live="polite" data-i18n="breath.ready">准备好了吗</span>
       <span class="breath-count" id="breath-count" aria-hidden="true"></span>
     </div>
   </div>
 
-  <div class="guidance" id="guidance" aria-live="polite">轻轻闭上眼睛，把注意力带到呼吸上</div>
+  <div class="guidance" id="guidance" aria-live="polite" data-i18n="guidance.init">轻轻闭上眼睛，把注意力带到呼吸上</div>
 
   <div class="session-bottom">
     <div class="progress-wrap">
       <div class="progress-bar"><span id="progress-fill"></span></div>
       <div class="time-readout"><span id="time-left">10:00</span><span class="time-total" id="time-total">/ 10:00</span></div>
     </div>
-    <button class="text-btn" id="btn-finish">结束本次</button>
+    <button class="text-btn" id="btn-finish" data-i18n="btn.finish">结束本次</button>
   </div>
 
   <div class="pause-overlay" id="pause-overlay">
     <div class="pause-card">
       <span class="pause-mark">Ⅱ</span>
-      <p>已暂停</p>
-      <button class="btn btn--primary" id="btn-resume">继续静坐</button>
-      <button class="text-btn" id="btn-end-from-pause">结束本次</button>
-      <p class="pause-hint">空格键 暂停 / 继续 · Esc 结束</p>
+      <p data-i18n="pause.title">已暂停</p>
+      <button class="btn btn--primary" id="btn-resume" data-i18n="btn.resume">继续静坐</button>
+      <button class="text-btn" id="btn-end-from-pause" data-i18n="btn.finish">结束本次</button>
+      <p class="pause-hint" data-i18n="pause.hint">空格键 暂停 / 继续 · Esc 结束</p>
     </div>
   </div>
 </section>
@@ -221,35 +226,36 @@
     <div class="done-mark" aria-hidden="true">
       <svg viewBox="0 0 64 64" fill="none"><path d="M20 33 L28 41 L45 24" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>
     </div>
-    <h2 class="done-title">坐完了，很好</h2>
-    <p class="done-sub" id="done-sub">谢谢你，留了这段时间给自己。</p>
+    <h2 class="done-title" data-i18n="done.title">坐完了，很好</h2>
+    <p class="done-sub" id="done-sub" data-i18n="done.sub.long">谢谢你，留了这段时间给自己。</p>
     <div class="done-stats">
-      <div class="stat"><span class="stat-num" id="stat-minutes">10</span><span class="stat-unit">分钟</span><span class="stat-label">本次静坐</span></div>
-      <div class="stat"><span class="stat-num" id="stat-total">1</span><span class="stat-unit">次</span><span class="stat-label">今天累计</span></div>
-      <div class="stat"><span class="stat-num" id="stat-streak">1</span><span class="stat-unit">天</span><span class="stat-label">连续坚持</span></div>
+      <div class="stat"><span class="stat-num" id="stat-minutes">10</span><span class="stat-unit" data-i18n="stat.unit.min">分钟</span><span class="stat-label" data-i18n="stat.this">本次静坐</span></div>
+      <div class="stat"><span class="stat-num" id="stat-total">1</span><span class="stat-unit" data-i18n="stat.unit.times">次</span><span class="stat-label" data-i18n="stat.today">今天累计</span></div>
+      <div class="stat"><span class="stat-num" id="stat-streak">1</span><span class="stat-unit" data-i18n="stat.unit.days">天</span><span class="stat-label" data-i18n="stat.streak">连续坚持</span></div>
     </div>
-    <p class="done-quote">"安静不是没有声音，<br>而是心不再追着声音跑。"</p>
+    <p class="done-quote" data-i18n-html="done.quote">“安静不是没有声音，<br>而是心不再追着声音跑。”</p>
     <div class="reflection" id="reflection">
-      <label class="reflection-label" for="reflection-input">留一句话给这一场（可选）</label>
+      <label class="reflection-label" for="reflection-input" data-i18n="reflection.label">留一句话给这一场（可选）</label>
       <div class="reflection-row">
-        <input class="reflection-input" id="reflection-input" type="text" maxlength="60" placeholder="此刻，你想说点什么…" autocomplete="off">
-        <button class="reflection-send" id="reflection-send" aria-label="留下这句话">留下</button>
+        <input class="reflection-input" id="reflection-input" type="text" maxlength="60" data-i18n-ph="reflection.ph" placeholder="此刻，你想说点什么…" autocomplete="off">
+        <button class="reflection-send" id="reflection-send" data-i18n-aria="reflection.send" aria-label="留下这句话"><span data-i18n="reflection.send">留下</span></button>
       </div>
-      <div class="reflection-note" id="reflection-note">只保存在你自己的浏览器里，不上传、别人看不到。</div>
+      <div class="reflection-note" id="reflection-note" data-i18n="reflection.note">只保存在你自己的浏览器里，不上传、别人看不到。</div>
       <div class="reflection-list" id="reflection-list"></div>
     </div>
     <div class="done-actions">
-      <button class="btn btn--primary" id="btn-again">再坐一会</button>
-      <button class="btn btn--ghost" id="btn-home">回到开头</button>
+      <button class="btn btn--primary" id="btn-again" data-i18n="btn.again">再坐一会</button>
+      <button class="btn btn--ghost" id="btn-home" data-i18n="btn.home">回到开头</button>
     </div>
   </div>
 </section>
 
 <!-- 合规声明：明确这是放松练习工具，非医疗/心理治疗 -->
-<footer class="disclaimer" id="disclaimer">
+<footer class="disclaimer" id="disclaimer" data-i18n="disclaimer">
   栖山是放松与专注的练习工具，不构成医疗诊断或心理治疗。若你正经历持续的心理困扰，请及时寻求专业帮助（可拨打心理援助热线 12356）。
 </footer>
 
+<script src="js/i18n.js"></script>
 <script src="js/audio.js"></script>
 <script src="js/scenes.js"></script>
 <script src="js/gather.js"></script>

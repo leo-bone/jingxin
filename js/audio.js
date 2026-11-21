@@ -10,7 +10,7 @@
 
   var FILES = {
     guide3: 'assets/audio/guide3_female.mp3',      // 女声短引导 · English · Free Mindfulness
-    guide3m: 'assets/audio/guide3_cn.mp3',         // 男声短引导 · 普通话 · UCLA Mindful
+    guide3m: 'assets/audio/guide3_cn.mp3',         // 女声短引导 · 普通话 · UCLA Mindful
     bodyscanf: 'assets/audio/bodyscan_female.mp3', // 身体扫描 · 女声 English
     bodyscanm: 'assets/audio/bodyscan_male.mp3',   // 身体扫描 · 男声 English
     bodyscancn: 'assets/audio/bodyscan_cn.mp3',    // 身体扫描 · 普通话 · UCLA Mindful

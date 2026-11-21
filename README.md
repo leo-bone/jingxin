@@ -4,6 +4,9 @@
 一处不注册、不聊天、不推送、不设任务的在线静心空间。选择一处环境，跟着呼吸，安静坐一会儿。
 An online space for stillness — no sign-up, no chat, no push notifications, no tasks. Choose a setting, follow your breath, and sit quietly for a while.
 
+觉得项目还不错的话，欢迎到 [GitHub](https://github.com/leo-bone/jingxin) 给我点个 Star。
+If you like this project, please give it a Star on [GitHub](https://github.com/leo-bone/jingxin).
+
 - 正式站点：<https://jingxin.uichain.org>
 - Live site: <https://jingxin.uichain.org>
 - 源码仓库：<https://github.com/leo-bone/jingxin>

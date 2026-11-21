@@ -69,7 +69,7 @@
       'phase.inhale': '吸气', 'phase.exhale': '呼气', 'phase.hold': '停留',
 
       'sound.guide3': '正念引导·女声 英语',
-      'sound.guide3m': '正念引导·男声 中文',
+      'sound.guide3m': '正念引导·女声 中文',
       'sound.bowl': '颂钵',
       'sound.forest': '林风',
       'sound.water': '流水',
@@ -192,7 +192,7 @@
       'phase.inhale': 'Breathe in', 'phase.exhale': 'Breathe out', 'phase.hold': 'Hold',
 
       'sound.guide3': 'Guidance · Female (English)',
-      'sound.guide3m': 'Guidance · Male (Mandarin)',
+      'sound.guide3m': 'Guidance · Female (Mandarin)',
       'sound.bowl': 'Singing bowl',
       'sound.forest': 'Forest wind',
       'sound.water': 'Flowing water',

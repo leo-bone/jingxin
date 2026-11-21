@@ -151,6 +151,18 @@
       <p class="sound-credit" id="full-note">身体扫描躺着或坐着均可，把觉察依次带到身体各处；完整坐禅从呼吸、身体到声音与念头，走一整套正念练习。选择后时长自动跟随音频，无需另设。</p>
     </div>
 
+    <div class="field" id="gather-field">
+      <div class="field-label"><span>共坐一场</span><span class="field-note">与同一时段的人，一起开始、一起结束</span></div>
+      <div class="gather-card">
+        <div class="gather-info">
+          <span class="gather-session" id="gather-session">本场共坐</span>
+          <span class="gather-seats" id="gather-seats">— 人在坐</span>
+        </div>
+        <div class="gather-count" id="gather-count">距本场结束 —</div>
+      </div>
+      <p class="sound-credit">场次按公共时钟每 30 分钟一轮（整点 / 半点），同一时段的人算作同一场。此刻的人数为氛围演示值，非真实在线人数；留言只保存在你的浏览器，不上传。</p>
+    </div>
+
     <button class="btn btn--primary btn--wide" id="btn-start">开始静坐 <span class="arrow">→</span></button>
   </div>
 </section>
@@ -164,7 +176,7 @@
     <div class="session-meta">
       <div class="co-presence" id="co-presence">
         <span class="co-dot" aria-hidden="true"></span>
-        与众人同坐，不必言语
+        <span id="co-text">与众人同坐，不必言语</span>
       </div>
       <div class="sound-status" id="sound-status" aria-live="polite">正念引导·女声</div>
     </div>
@@ -217,6 +229,15 @@
       <div class="stat"><span class="stat-num" id="stat-streak">1</span><span class="stat-unit">天</span><span class="stat-label">连续坚持</span></div>
     </div>
     <p class="done-quote">"安静不是没有声音，<br>而是心不再追着声音跑。"</p>
+    <div class="reflection" id="reflection">
+      <label class="reflection-label" for="reflection-input">留一句话给这一场（可选）</label>
+      <div class="reflection-row">
+        <input class="reflection-input" id="reflection-input" type="text" maxlength="60" placeholder="此刻，你想说点什么…" autocomplete="off">
+        <button class="reflection-send" id="reflection-send" aria-label="留下这句话">留下</button>
+      </div>
+      <div class="reflection-note" id="reflection-note">只保存在你自己的浏览器里，不上传、别人看不到。</div>
+      <div class="reflection-list" id="reflection-list"></div>
+    </div>
     <div class="done-actions">
       <button class="btn btn--primary" id="btn-again">再坐一会</button>
       <button class="btn btn--ghost" id="btn-home">回到开头</button>
@@ -231,6 +252,7 @@
 
 <script src="js/audio.js"></script>
 <script src="js/scenes.js"></script>
+<script src="js/gather.js"></script>
 <script src="js/app.js"></script>
 </body>
 </html>

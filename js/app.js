@@ -285,6 +285,45 @@
     }
   }
 
+  // ---------- 共坐一场（氛围层，纯前端） ----------
+  // 设置页卡片：每秒刷新本场倒计时与演示人数
+  function refreshGatherCard() {
+    const snap = Gather.snapshot();
+    $('#gather-session').textContent = '本场 ' + snap.startLabel + '–' + snap.endLabel;
+    $('#gather-seats').textContent = snap.seats + ' 人在坐';
+    $('#gather-count').textContent = '距本场结束 ' + snap.remain;
+  }
+  // 会话页顶部：显示本场人数与同一场提示
+  function updateCoText() {
+    if (state._gatherSnap) {
+      $('#co-text').textContent =
+        '本场 ' + state._gatherSnap.seats + ' 人同坐 · 不必言语';
+    }
+  }
+  setInterval(() => {
+    if ($('#screen-setup').classList.contains('is-active')) refreshGatherCard();
+  }, 1000);
+
+  // 结束页：渲染本场留言（只来自本机）
+  function renderReflections() {
+    const list = $('#reflection-list');
+    if (!list || !window.Gather) return;
+    const key = state._gatherKey || Gather.snapshot().key;
+    const rows = Gather.listReflections(key);
+    list.innerHTML = '';
+    rows.slice().reverse().forEach(r => {
+      const item = document.createElement('div');
+      item.className = 'reflection-item';
+      const meta = document.createElement('span');
+      meta.className = 'reflection-meta';
+      const t = new Date(r.at);
+      meta.textContent = '你 · ' + String(t.getHours()).padStart(2, '0') + ':' + String(t.getMinutes()).padStart(2, '0');
+      item.appendChild(document.createTextNode(r.text));
+      item.appendChild(meta);
+      list.appendChild(item);
+    });
+  }
+
   // ---------- 屏幕按钮 ----------
   $('#btn-enter').addEventListener('click', () => show('setup'));
   $('#btn-back').addEventListener('click', () => show('intro'));
@@ -295,6 +334,28 @@
   $('#btn-end-from-pause').addEventListener('click', finishSession);
   $('#btn-again').addEventListener('click', () => { show('setup'); });
   $('#btn-home').addEventListener('click', () => { show('intro'); applyScene('forest'); });
+  // 坐后一句：只写本机，写入后重渲染，并给一句轻反馈
+  function submitReflection() {
+    if (!window.Gather) return;
+    const input = $('#reflection-input');
+    const text = input ? input.value.trim() : '';
+    if (!text) return;
+    const key = state._gatherKey || Gather.snapshot().key;
+    Gather.addReflection(key, text);
+    input.value = '';
+    renderReflections();
+    const note = $('#reflection-note');
+    if (note) {
+      const old = note.textContent;
+      note.textContent = '已留下，只在这台设备上。';
+      setTimeout(() => { note.textContent = old; }, 2600);
+    }
+  }
+  $('#reflection-send').addEventListener('click', submitReflection);
+  $('#reflection-input').addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') { e.preventDefault(); submitReflection(); }
+  });
+
   $('#btn-sound').addEventListener('click', () => {
     if (state.sound === 'off') {
       state.sound = state.lastSound || 'guide3';
@@ -336,6 +397,9 @@
     const total = sessionTotal();
     state._fullPractice = full;       // 锁定会话类型，避免中途静音 sound→off 后判定漂移
     state._sessionTotal = total;      // 锁定会话总时长，静音/结束都按此走
+    // 锁定本场共坐：会话跨过整点也不换场
+    state._gatherSnap = window.Gather ? Gather.snapshot() : null;
+    state._gatherKey = state._gatherSnap ? state._gatherSnap.key : null;
     state.running = true;
     state.paused = false;
     state.elapsed = 0;
@@ -371,6 +435,7 @@
       audio.stop();
     }
 
+    updateCoText();
     show('session');
   }
 
@@ -404,6 +469,10 @@
     $('#done-sub').textContent = state.elapsed < 30
       ? '哪怕只是片刻，你也停下来过了。'
       : '谢谢你，留了这段时间给自己。';
+    // 清空上一场输入框，渲染本场留言
+    const input = $('#reflection-input');
+    if (input) input.value = '';
+    renderReflections();
     show('done');
   }
 
@@ -541,5 +610,6 @@
   show('intro');
   updateSoundIcon();
   updateSoundStatus();
+  if (window.Gather) refreshGatherCard();
   requestAnimationFrame(loop);
 })();

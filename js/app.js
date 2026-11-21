@@ -16,10 +16,12 @@
     scene: 'forest',
     minutes: 10,
     breath: 'calm',
-    sound: 'guide3',
-    lastSound: 'guide3',
+    sound: 'guide3',      // 用户选择的声音；始终是有效类型，不被静音改写
+    muted: false,         // 会话内静音，独立于声音选择（避免状态污染）
     guideEnded: false,
     guideActive: false,  // 真人引导正在主导（此时不再滚动中文引导语，避免中英打架）
+    _doneShort: false,   // 结束页是否用"片刻"文案，供语言切换时重建
+    _reflectionNoteSaved: false, // 结束页提示当前是否为"已留下"状态
     // 会话运行态
     running: false,
     paused: false,
@@ -55,14 +57,18 @@
   }
 
   // 是否为真人语音引导（3 分钟短引导 + 整套完整练习）：均由音频主导屏幕
+  // 复用 audio.js 的清单，避免两处各写一份导致漂移
   function isGuideSound(s) {
-    return s === 'guide3' || s === 'guide3m' || isFullPractice(s);
+    return window.AudioEngine && AudioEngine.isGuide
+      ? AudioEngine.isGuide(s)
+      : (s === 'guide3' || s === 'guide3m' || isFullPractice(s));
   }
 
   // 按会话时长抽取引导语序列：短时少句避免切换过密，长时铺满完整脉络
   function guidanceFor(minutes) {
     const GUIDANCE = window.I18n ? I18n.guidance() : [];
-    if (!GUIDANCE.length) return [];
+    // 至少返回一句，避免字典异常时 endGuidanceMode() 把 undefined 写进屏幕
+    if (!GUIDANCE.length) return [t('guidance.init')];
     const counts = { 3: 6, 5: 8, 10: 12, 15: 15, 20: 15 };
     const n = counts[minutes] || 12;
     if (n >= GUIDANCE.length) return GUIDANCE.slice();
@@ -76,9 +82,9 @@
   // ---------- 引擎实例 ----------
   const sceneEngine = new SceneEngine($('#scene'));
   const audio = new AudioEngine(function () {
-    // 整套完整练习播完：练习即圆满，直接结束本次
+    // 整套完整练习播完：练习即圆满，按完整时长正常结算
     if (state._fullPractice) {
-      finishSession();
+      finishSession(true);
       return;
     }
     // 3 分钟短引导播完：语音退场，中文引导语接管余下的静坐时间
@@ -186,6 +192,13 @@
   }
 
   // ---------- 设置交互 ----------
+  // 把视觉选中态同步成 aria-pressed，让读屏用户能感知当前选项
+  const PRESSABLE = '#duration-row .chip, #breath-row .chip, #sound-row .chip, #full-row .chip, #scene-grid .scene-card';
+  function syncPressed() {
+    $$(PRESSABLE).forEach(c =>
+      c.setAttribute('aria-pressed', c.classList.contains('is-selected') ? 'true' : 'false'));
+  }
+
   function bindChips(rowSel, key, transform) {
     $$(rowSel + ' .chip').forEach(chip => {
       chip.addEventListener('click', () => {
@@ -194,23 +207,29 @@
         const val = chip.dataset[key];
         state[({ scene: 'scene', min: 'minutes', breath: 'breath', sound: 'sound' })[key]] = transform ? transform(val) : val;
         if (key === 'scene') applyScene(val);
+        syncPressed();
       });
     });
+  }
+
+  // 时长说明：普通静坐显示常用时长，整套练习显示"随音频"
+  // 抽成函数供语言切换时重建，避免被静态 data-i18n 冲回默认值
+  function refreshDurationNote() {
+    const locked = isFullPractice(state.sound);
+    $('#duration-row').classList.toggle('is-locked', locked);
+    $('#duration-note').textContent = locked ? t('field.duration.locked') : t('field.duration.note');
   }
 
   // 声音 / 整套练习共用：两组 chip 互斥，选择只记忆、不预播放
   function selectSound(val) {
     state.sound = val;
     audio.setType(val);
-    state.lastSound = val;
     $$('#sound-row .chip, #full-row .chip').forEach(c =>
       c.classList.toggle('is-selected', c.dataset.sound === val));
-    // 整套练习时长随音频，置灰时长选择避免误解
-    const full = isFullPractice(val);
-    $('#duration-row').classList.toggle('is-locked', full);
-    $('#duration-note').textContent = full ? t('field.duration.locked') : t('field.duration.note');
+    refreshDurationNote();
     updateSoundIcon();
     updateSoundStatus();
+    syncPressed();
   }
   // 场景卡片单独绑定（非 chip 结构）
   $$('#scene-grid .scene-card').forEach(card => {
@@ -219,6 +238,7 @@
       card.classList.add('is-selected');
       state.scene = card.dataset.scene;
       applyScene(state.scene);
+      syncPressed();
     });
   });
   bindChips('#duration-row', 'min', v => parseInt(v, 10));
@@ -236,13 +256,15 @@
   });
 
   function updateSoundIcon() {
-    const off = state.sound === 'off';
-    $('#sound-icon').textContent = off ? t('sound.icon.off') : t('sound.icon.on');
-    $('#btn-sound').setAttribute('aria-label', off ? t('sound.on') : t('sound.mute'));
+    const btn = $('#btn-sound');
+    $('#sound-icon').textContent = state.muted ? t('sound.icon.off') : t('sound.icon.on');
+    // aria-label 描述"点下去会发生什么"，aria-pressed 描述"当前是否处于静音"
+    btn.setAttribute('aria-label', state.muted ? t('sound.on') : t('sound.mute'));
+    btn.setAttribute('aria-pressed', state.muted ? 'true' : 'false');
   }
 
   function updateSoundStatus() {
-    if (state.sound === 'off') {
+    if (state.muted) {
       $('#sound-status').textContent = t('sound.off');
     } else if (isGuideSound(state.sound) && state.guideEnded) {
       $('#sound-status').textContent = t('sound.ended');
@@ -297,10 +319,18 @@
   $('#btn-start').addEventListener('click', startSession);
   $('#btn-pause').addEventListener('click', pauseSession);
   $('#btn-resume').addEventListener('click', resumeSession);
-  $('#btn-finish').addEventListener('click', finishSession);
-  $('#btn-end-from-pause').addEventListener('click', finishSession);
+  // 包装一层：避免 addEventListener 把 Event 对象当作 finishSession 的入参
+  $('#btn-finish').addEventListener('click', () => finishSession(false));
+  $('#btn-end-from-pause').addEventListener('click', () => finishSession(false));
   $('#btn-again').addEventListener('click', () => { show('setup'); });
-  $('#btn-home').addEventListener('click', () => { show('intro'); applyScene('forest'); });
+  $('#btn-home').addEventListener('click', () => {
+    // 回到开头时把场景选择一并复位，避免设置页选中卡片与实际背景不一致
+    state.scene = 'forest';
+    $$('#scene-grid .scene-card').forEach(c => c.classList.toggle('is-selected', c.dataset.scene === 'forest'));
+    syncPressed();
+    show('intro');
+    applyScene('forest');
+  });
   // 坐后一句：只写本机，写入后重渲染，并给一句轻反馈
   function submitReflection() {
     if (!window.Gather) return;
@@ -311,10 +341,14 @@
     Gather.addReflection(key, text);
     input.value = '';
     renderReflections();
+    state._reflectionNoteSaved = true;
     const note = $('#reflection-note');
     if (note) {
       note.textContent = t('reflection.saved');
-      setTimeout(() => { note.textContent = t('reflection.note'); }, 2600);
+      setTimeout(() => {
+        state._reflectionNoteSaved = false;
+        note.textContent = t('reflection.note');
+      }, 2600);
     }
   }
   $('#reflection-send').addEventListener('click', submitReflection);
@@ -322,30 +356,30 @@
     if (e.key === 'Enter') { e.preventDefault(); submitReflection(); }
   });
 
+  // 静音是"会话内的临时状态"，与用户选的声音彼此独立：
+  // 不再把 state.sound 改写成 'off'，避免结束 / 再坐时丢掉声音选择或残留静音。
   $('#btn-sound').addEventListener('click', () => {
-    if (state.sound === 'off') {
-      state.sound = state.lastSound || 'guide3';
-      audio.setType(state.sound);
-      if (state.running && !state.paused) {
+    state.muted = !state.muted;
+    if (state.muted) {
+      audio.disable();
+      // 手动静音真人引导时，把引导话语权交还给屏幕，避免静默到底
+      if (state.guideActive) endGuidanceMode();
+    } else if (state.running && !state.paused) {
+      // 引导已自然播完：本场语音已经退场，不再重启声音，
+      // 由屏幕引导语陪伴余下时间（audio.resume 也会因 guideFinished 而拒绝重播）。
+      const guideDone = isGuideSound(state.sound) && state.guideEnded;
+      if (!guideDone) {
         audio.resume();
         // 恢复真人引导：让音频重新接管屏幕，避免与中文引导语同时滚动
         if (isGuideSound(state.sound)) {
           state.guideActive = true;
-          state.guideEnded = false;
-          const hint = state.sound === 'sitting' || state.sound === 'sittingcn' ? t('hint.sitting')
+          const hint = (state.sound === 'sitting' || state.sound === 'sittingcn') ? t('hint.sitting')
             : isFullPractice(state.sound) ? t('hint.body')
             : t('hint.breath');
           setGuidance(hint, true);
         }
       }
-    } else {
-      state.lastSound = state.sound;
-      state.sound = 'off';
-      audio.disable();
-      // 手动静音真人引导时，把引导话语权交还给屏幕，避免静默到底
-      if (state.guideActive) endGuidanceMode();
     }
-    $$('#sound-row .chip, #full-row .chip').forEach(c => c.classList.toggle('is-selected', c.dataset.sound === state.sound));
     updateSoundIcon();
     updateSoundStatus();
   });
@@ -361,7 +395,7 @@
     // 完整练习时长以录音为准（忽略时长 chip）；普通静坐用所选时长
     const full = isFullPractice(state.sound);
     const total = sessionTotal();
-    state._fullPractice = full;       // 锁定会话类型，避免中途静音 sound→off 后判定漂移
+    state._fullPractice = full;       // 锁定会话类型，避免中途改动声音选择后判定漂移
     state._sessionTotal = total;      // 锁定会话总时长，静音/结束都按此走
     // 锁定本场共坐：会话跨过整点也不换场
     state._gatherSnap = window.Gather ? Gather.snapshot() : null;
@@ -384,7 +418,7 @@
     $('#progress-fill').style.width = '0%';
     $('#pause-overlay').classList.remove('is-active');
     state.guideEnded = false;
-    state.guideActive = isGuideSound(state.sound) && state.sound !== 'off';
+    state.guideActive = isGuideSound(state.sound) && !state.muted;
     // 真人引导主导时，屏幕只给一句静态提示，让位给语音；否则用引导语陪伴
     const guideHint = full
       ? ((state.sound === 'sitting' || state.sound === 'sittingcn') ? t('hint.sitting') : t('hint.body'))
@@ -394,7 +428,7 @@
     updateSoundStatus();
 
     // 用户点击「开始静坐」后才播放，设置页不预发声
-    if (state.sound !== 'off') {
+    if (!state.muted) {
       audio.setType(state.sound);
       audio.play();
     } else {
@@ -415,28 +449,38 @@
     if (!state.paused) return;
     state.paused = false;
     state.lastTick = performance.now();
-    if (state.sound !== 'off') audio.resume();
+    if (!state.muted) audio.resume();
     $('#pause-overlay').classList.remove('is-active');
   }
 
-  function finishSession() {
+  // completed=true 表示"正常走完"（计时到点 / 整套练习音频播完），
+  // 按会话总时长结算；false 表示用户提前结束，按实际已坐时间结算。
+  // 参数用严格 === true 判断，避免误把 DOM Event 当成完成标记。
+  function finishSession(completed) {
     if (!state.running) return; // 防止音频结束与计时到点同帧重复结算
+    const finished = completed === true;
     state.running = false;
     state.paused = false;
     state.guideActive = false;
+    state.muted = false;   // 静音只属于这一场，不带到下一次静坐
     $('#pause-overlay').classList.remove('is-active');
     audio.stop();
 
     const rec = saveSession();
-    const mins = Math.max(1, Math.round(state.elapsed / 60));
+    const effective = finished ? (state._sessionTotal || sessionTotal()) : state.elapsed;
+    const mins = Math.max(1, Math.round(effective / 60));
+    state._doneShort = effective < 30;
     $('#stat-minutes').textContent = mins;
     $('#stat-total').textContent = todayCount(rec);
     $('#stat-streak').textContent = streak(rec);
-    $('#done-sub').textContent = state.elapsed < 30 ? t('done.sub.short') : t('done.sub.long');
+    $('#done-sub').textContent = state._doneShort ? t('done.sub.short') : t('done.sub.long');
+    state._reflectionNoteSaved = false;
     // 清空上一场输入框，渲染本场留言
     const input = $('#reflection-input');
     if (input) input.value = '';
     renderReflections();
+    updateSoundIcon();
+    updateSoundStatus();
     show('done');
   }
 
@@ -508,6 +552,10 @@
   }
 
   // ---------- 主渲染循环 ----------
+  // 非会话页的背景只需极轻微动感，降频渲染可显著降低 GPU / 电量占用；
+  // 会话页保持满帧以维持呼吸圆环的顺滑。计时始终按真实帧推进，不受节流影响。
+  let lastRender = 0;
+  const IDLE_FRAME = reduceMotion ? 200 : 50; // 减少动态约 5fps，普通约 20fps
   function loop(now) {
     const dt = Math.min(now - state.lastTick, 100);
     state.lastTick = now;
@@ -538,14 +586,18 @@
         }
       }
 
-      if (state.elapsed >= total) finishSession();
+      if (state.elapsed >= total) finishSession(true);
     } else if (state.paused) {
       const cfg = BREATH[state.breath];
       const info = breathInfo(state.breathElapsed, cfg);
       breath = info.scale;
     }
 
-    sceneEngine.render(now, reduceMotion ? 0.5 : breath);
+    const sessionActive = state.running || $('#screen-session').classList.contains('is-active');
+    if (sessionActive || now - lastRender >= IDLE_FRAME) {
+      sceneEngine.render(now, reduceMotion ? 0.5 : breath);
+      lastRender = now;
+    }
     requestAnimationFrame(loop);
   }
 
@@ -559,21 +611,27 @@
       if (state.paused) resumeSession(); else pauseSession();
     } else if (e.code === 'Escape') {
       e.preventDefault();
-      finishSession();
+      finishSession(false);
     }
   });
 
   // ---------- 语言切换：切换后重刷所有动态文案 ----------
+  // applyStatic() 只负责静态 data-i18n，会把被 JS 改写过的节点冲回默认值，
+  // 因此所有运行时文案都必须在这里逐项重建，否则出现中英混杂或状态回退。
   function refreshDynamic() {
     updateSoundIcon();
     updateSoundStatus();
     updateCoText();
+    refreshDurationNote();            // 整套练习锁定时长说明（BUG-2）
     if (window.Gather) refreshGatherCard();
     // 呼吸原理说明跟随当前选中的呼吸法
     const breathNote = $('#breath-note');
     if (breathNote) breathNote.textContent = t('breathNote.' + state.breath);
     // 正在会话中：重建引导语序列并刷新当前显示，避免中英混杂
     if (state.running) {
+      // 暂停时 loop 不刷新相位文字，语言切换后需立即同步
+      const info = breathInfo(state.breathElapsed, BREATH[state.breath]);
+      $('#breath-label').textContent = t('phase.' + info.label);
       state._guidanceSeq = guidanceFor(state.minutes);
       if (state.guideActive) {
         const full = state._fullPractice;
@@ -589,8 +647,13 @@
         if (seq[gi]) setGuidance(seq[gi], true);
       }
     }
-    // 结束页：若停留在此页，重渲染留言里的"你"与时间戳语言
-    if ($('#screen-done').classList.contains('is-active')) renderReflections();
+    // 结束页：重建动态结束语、留言提示与留言列表里的"你"
+    if ($('#screen-done').classList.contains('is-active')) {
+      $('#done-sub').textContent = state._doneShort ? t('done.sub.short') : t('done.sub.long');
+      const rNote = $('#reflection-note');
+      if (rNote) rNote.textContent = state._reflectionNoteSaved ? t('reflection.saved') : t('reflection.note');
+      renderReflections();
+    }
   }
 
   $('#btn-lang').addEventListener('click', () => {
@@ -611,6 +674,8 @@
   preloadPhotos();
   applyScene('forest');
   show('intro');
+  syncPressed();
+  refreshDurationNote();
   updateSoundIcon();
   updateSoundStatus();
   if (window.Gather) refreshGatherCard();

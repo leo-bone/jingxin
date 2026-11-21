@@ -463,14 +463,17 @@
 
   function SceneEngine(canvas) {
     this.canvas = canvas;
-    this.ctx = canvas.getContext('2d');
+    // 极少数环境（禁用 Canvas / 上下文创建失败）下静默降级为纯照片背景，
+    // 不让整站脚本因一个绘制层而中断。
+    this.ctx = (canvas && canvas.getContext) ? canvas.getContext('2d') : null;
+    this.ok = !!this.ctx;
     this.current = 'forest';
     this.hasPhoto = false;
     this.photoParticles = null;
     this.dpr = Math.min(window.devicePixelRatio || 1, 2);
     this.w = 0; this.h = 0;
     this.last = performance.now();
-    this.resize();
+    if (this.ok) this.resize();
   }
   SceneEngine.prototype.setScene = function (name, hasPhoto) {
     // 有照片的场景（含太空/火星/炉边/南极）走叠加层，无需程序化绘制函数
@@ -510,6 +513,7 @@
     Particles.prototype.draw.call(p.dust, ctx, w, h, now, dt, p.cfg.dust);
   };
   SceneEngine.prototype.resize = function () {
+    if (!this.ok) return;
     this.w = window.innerWidth;
     this.h = window.innerHeight;
     this.dpr = Math.min(window.devicePixelRatio || 1, 2);
@@ -521,6 +525,7 @@
   };
   // breath: 0..1；轻微缩放营造"画面也在呼吸"的沉浸感
   SceneEngine.prototype.render = function (now, breath) {
+    if (!this.ok) return;
     const dt = Math.min(now - this.last, 60);
     this.last = now;
     const w = this.w, h = this.h;

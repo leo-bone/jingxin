@@ -63,6 +63,7 @@ body.mode-session .scene-veil{background:radial-gradient(ellipse at 50% 45%,tran
   opacity:0;visibility:hidden;transform:translateY(8px);
   transition:opacity .6s var(--ease),transform .6s var(--ease),visibility .6s;
   overflow-y:auto;overflow-x:hidden;
+  overscroll-behavior:contain; /* 面板内滚动不穿透到页面 / 触发回弹 */
 }
 .screen.is-active{opacity:1;visibility:visible;transform:none;pointer-events:auto}
 .screen::-webkit-scrollbar{width:6px}
@@ -396,7 +397,10 @@ body.mode-panel .disclaimer{color:rgba(35,44,42,.5);background:linear-gradient(0
 
 /* ---------- 语言切换按钮（始终可见，固定右上） ---------- */
 .lang-btn{
-  position:fixed;top:18px;right:18px;z-index:50;
+  position:fixed;
+  top:calc(18px + env(safe-area-inset-top));
+  right:calc(18px + env(safe-area-inset-right));
+  z-index:50;
   min-width:44px;height:38px;padding:0 12px;
   border:1px solid rgba(255,255,255,.5);
   border-radius:999px;
@@ -415,6 +419,22 @@ body.mode-session .lang-btn{
 }
 body.mode-session .lang-btn:hover{background:rgba(20,32,32,.62)}
 
+/* ---------- 键盘可见焦点 ---------- */
+/* 金色描边在浅色面板与深色会话背景上都保持足够对比度 */
+.btn:focus-visible,
+.chip:focus-visible,
+.scene-card:focus-visible,
+.icon-btn:focus-visible,
+.text-btn:focus-visible,
+.reflection-send:focus-visible,
+.reflection-input:focus-visible,
+.lang-btn:focus-visible{
+  outline:2px solid var(--gold);
+  outline-offset:3px;
+}
+
 @media(prefers-reduced-motion:reduce){
   *{animation-duration:.01ms!important;transition-duration:.01ms!important}
+  /* 关闭照片的呼吸视差，避免持续位移引起晕动；JS 的 inline transform 被 !important 覆盖 */
+  .scene-photo{transform:scale(1.09)!important}
 }

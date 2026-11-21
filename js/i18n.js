@@ -15,7 +15,7 @@
     zh: {
       'meta.title': '栖山 · 留一段时间给自己安静',
       'meta.desc': '栖山——一处无需注册、不说话的在线静心空间。择一处环境，跟着呼吸，安静坐一会儿。',
-      'lang.aria': 'Switch to English',
+      'lang.aria': '切换到英文',
 
       'intro.brand': '栖山',
       'intro.title': '留一段时间<span class="dot">，</span><br>给自己安静',
@@ -138,7 +138,7 @@
     en: {
       'meta.title': 'Qishan · A quiet moment for yourself',
       'meta.desc': 'Qishan — a quiet space to sit online. No sign-up, no talking. Choose a place, follow your breath, and just sit for a while.',
-      'lang.aria': '切换到中文',
+      'lang.aria': 'Switch to Chinese',
 
       'intro.brand': 'Qishan',
       'intro.title': 'A little time<span class="dot">,</span><br>just for quiet',
@@ -278,6 +278,7 @@
     each('[data-i18n]', function (el) { el.textContent = t(el.getAttribute('data-i18n')); });
     each('[data-i18n-html]', function (el) { el.innerHTML = t(el.getAttribute('data-i18n-html')); });
     each('[data-i18n-ph]', function (el) { el.setAttribute('placeholder', t(el.getAttribute('data-i18n-ph'))); });
+    each('[data-i18n-title]', function (el) { el.setAttribute('title', t(el.getAttribute('data-i18n-title'))); });
     each('[data-i18n-aria]', function (el) { el.setAttribute('aria-label', t(el.getAttribute('data-i18n-aria'))); });
     document.documentElement.lang = (lang === 'zh') ? 'zh-CN' : 'en';
     document.title = t('meta.title');

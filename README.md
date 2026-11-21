@@ -27,12 +27,16 @@ An online space for stillness — no sign-up, no chat, no push notifications, no
 - One-tap bilingual UI: the top-right `EN` / `中` button switches every piece of interface text — prompts, scene and sound names, disclaimer. The choice is stored locally and restored next time.
 - 会话中可随时暂停、静音或结束；支持键盘快捷键：空格暂停/继续、Esc 结束（闭眼练习时无需看屏幕）。
 - Pause, mute, or end at any time during a session. Keyboard shortcuts are supported: Space to pause/resume, Esc to end (no need to look at the screen with your eyes closed).
+- 静音是会话内的临时开关，与所选声音彼此独立：静音不会清掉声音选项，本次结束后自动复位，下一次静坐仍按你选的声音播放。
+- Mute is a temporary per-session switch, kept separate from your sound choice: muting never clears the selected sound, it resets when the session ends, and the next sit plays the sound you chose.
 - 真人语音引导与屏幕中文引导语互斥：引导播放期间只显示一句静态提示，播完后中文引导语按进度接管，避免中英两套引导同时干扰。手动静音引导时同样交还给文字陪伴。
 - Voice guidance and on-screen Chinese prompts are mutually exclusive: while the voice plays, only a single static hint is shown; when it ends, Chinese prompts take over according to progress, avoiding two sets of guidance at once. Manually muting also hands control back to the text.
 - 结束后记录今日次数与连续天数，数据只存在浏览器 localStorage。
 - After each session, today's count and your streak are recorded — stored only in your browser's localStorage.
 - 尊重系统「减少动态效果」设置；引导语使用 `aria-live` 播报。
 - Respects the system "reduce motion" setting; guidance text is announced via `aria-live`.
+- 无障碍与性能：所有选项带 `aria-pressed` 选中态、键盘操作有可见焦点；语言按钮的 `aria-label` / `title` 随界面语言切换；非会话页背景降帧渲染，减少 GPU 与电量占用；Canvas 不可用时自动降级为纯照片背景。
+- Accessibility and performance: every option exposes `aria-pressed`, keyboard focus is clearly visible, the language button's `aria-label` / `title` follow the current UI language, background rendering is throttled outside sessions, and the site degrades gracefully to a photo-only background if Canvas is unavailable.
 - 共坐一场（氛围层原型）：按公共时钟每 30 分钟一轮，同一时段算作同一场；结束后可留一句感想，仅存本机。详见下方「共坐一场」说明。
 - Sit together (atmosphere-layer prototype): a shared 30-minute slot on the clock; everyone in the same slot counts as one session. Leave a short reflection afterward, stored only on your device. See "Sit together" below.
 - 明确声明为放松与专注练习工具，不构成医疗诊断或心理治疗。
@@ -72,8 +76,8 @@ For those with time to practice a full session from beginning to end. The three 
 - 完整坐禅·中文 `sound=sittingcn`：*Complete Meditation Instructions*，UCLA Mindful，**17:28**。普通话完整练习，最适合中文用户从头练完一整套。
 - Sitting Meditation · Mandarin `sound=sittingcn`: *Complete Meditation Instructions*, UCLA Mindful, **17:28**. A complete Mandarin practice — the best option for Chinese speakers to finish a full sit.
 
-与 3 分钟短引导的关键区别：**这类音频本身就是完整练习**，所以会话时长直接取录音长度（`FULL_PRACTICE` 中写入的秒数），时钟与进度以音频为准，时长选项自动置灰；整段播完即判定本次圆满并进入结束页。屏幕同样只给一句静态提示，不与中文引导语叠加。手动静音后再开启，音频会重新接管屏幕。
-The key difference from the 3-minute short guidance: **these audio files are themselves complete practices**, so the session length is taken directly from the recording (the seconds stored in `FULL_PRACTICE`); the clock and progress follow the audio, and the duration options are automatically greyed out. When the track finishes, the session is complete and moves to the end screen. As before, the screen shows only one static hint and does not overlay Chinese prompts. If you mute and then turn sound back on, the audio retakes the screen.
+与 3 分钟短引导的关键区别：**这类音频本身就是完整练习**，所以会话时长直接取录音长度（`FULL_PRACTICE` 中写入的秒数），时钟与进度以音频为准，时长选项自动置灰；整段播完即判定本次圆满并进入结束页，统计按录音全长计入。屏幕同样只给一句静态提示，不与中文引导语叠加。引导尚未播完时手动静音再开启，音频会从暂停处继续并重新接管屏幕；若引导已自然播完，本场语音即退场，重新开启不会从头重播。
+The key difference from the 3-minute short guidance: **these audio files are themselves complete practices**, so the session length is taken directly from the recording (the seconds stored in `FULL_PRACTICE`); the clock and progress follow the audio, and the duration options are automatically greyed out. When the track finishes, the session is complete and moves to the end screen, with the full recorded length credited to your stats. As before, the screen shows only one static hint and does not overlay Chinese prompts. If you mute and unmute while the audio is still playing, it resumes from where it paused and retakes the screen; once the guidance has finished naturally, turning sound back on does **not** replay it from the beginning.
 
 ### 关于中文 / 哈佛普通话版 / About Chinese / Harvard Mandarin Versions
 

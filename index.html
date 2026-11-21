@@ -26,7 +26,7 @@
 <div class="scene-grain" aria-hidden="true"></div>
 
 <!-- 语言切换：始终可见 -->
-<button class="lang-btn" id="btn-lang" data-i18n-aria="lang.aria" aria-label="Switch to English" title="中文 / English">EN</button>
+<button class="lang-btn" id="btn-lang" data-i18n-aria="lang.aria" data-i18n-title="lang.aria" aria-label="切换到英文" title="切换到英文">EN</button>
 
 <!-- ============ 开场 ============ -->
 <section class="screen screen--intro is-active" id="screen-intro">
@@ -185,7 +185,8 @@
       </div>
       <div class="sound-status" id="sound-status" aria-live="polite">正念引导·女声</div>
     </div>
-    <button class="icon-btn icon-btn--ghost" id="btn-sound" data-i18n-aria="sound.mute" aria-label="声音开关">
+    <!-- aria-label / aria-pressed 由 app.js 按静音状态动态维护，此处仅为无脚本兜底 -->
+    <button class="icon-btn icon-btn--ghost" id="btn-sound" aria-label="静音" aria-pressed="false">
       <span id="sound-icon">声</span>
     </button>
   </div>

@@ -59,6 +59,9 @@
     this.enabled = true;
     this.paused = false;
     this.current = null;
+    // 显式标记"本场引导音已自然播完"，不依赖 HTMLMediaElement.ended
+    // （部分环境/自动播放被拒时 ended 不可靠），供 resume() 判定是否重播
+    this.guideFinished = false;
     this._token = 0;
     this._fadeTimer = null;
   }
@@ -74,8 +77,9 @@
     audio.loop = !isGuide(type);
     audio.volume = 0;
     audio.addEventListener('ended', function () {
-      if (self.current === audio && isGuide(type) && self.onGuideEnd) {
-        self.onGuideEnd();
+      if (self.current === audio && isGuide(type)) {
+        self.guideFinished = true;
+        if (self.onGuideEnd) self.onGuideEnd();
       }
     });
     return audio;
@@ -129,6 +133,7 @@
   AudioEngine.prototype.play = function () {
     if (!this.enabled) this.enabled = true;
     this.paused = false;
+    this.guideFinished = false; // 新一场、新一段音频，重置播完标记
 
     var token = ++this._token;
     var previous = this.current;
@@ -158,7 +163,12 @@
   AudioEngine.prototype.resume = function () {
     this.paused = false;
     if (!this.enabled) this.enabled = true;
-    if (!this.current || this.current.ended) {
+    // 引导音频已自然播完时不重播：避免"暂停/恢复"或"静音/恢复"
+    // 把整段引导从头再放一遍。此时由屏幕引导语陪伴，声音保持静默即可。
+    // guideFinished 由 ended 回调显式置位，current.ended 作为浏览器原生兜底。
+    if (this.guideFinished || (this.current && this.current.ended)) return;
+    // current 为空（例如上次自动播放被浏览器拒绝）时才重新播放
+    if (!this.current) {
       this.play();
       return;
     }
@@ -179,6 +189,9 @@
     this._token++;
     this._fadeOutPause(this.current);
   };
+
+  // 暴露引导音判断，供 app.js 复用，避免两处清单各自漂移
+  AudioEngine.isGuide = isGuide;
 
   window.AudioEngine = AudioEngine;
 })();

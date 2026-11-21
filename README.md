@@ -19,10 +19,10 @@ An online space for stillness — no sign-up, no chat, no push notifications, no
 - Mindfulness durations: 3, 5, 10, 15, and 20 minutes.
 - 呼吸节奏（以放松为目标，遵循「呼气不短于吸气」）：深呼吸（吸 4 / 呼 6）、共振呼吸（吸 5 / 呼 5）、4-7-8（吸 4 / 停 7 / 呼 8）、箱式（吸 4 / 停 4 / 呼 4 / 停 4）。每项附原理说明。
 - Breathing patterns (aimed at relaxation, following the principle that the exhale is never shorter than the inhale): Deep Breathing (inhale 4 / exhale 6), Resonant Breathing (inhale 5 / exhale 5), 4-7-8 (inhale 4 / hold 7 / exhale 8), and Box Breathing (inhale 4 / hold 4 / exhale 4 / hold 4). Each includes a short explanation of why it works.
-- 声音选择：真人正念引导（女声 English 约 3 分钟 / 女声普通话 5 分钟）、颂钵、林风（真实风吹树林）、流水、海浪、蛙声（纯蛙鸣）、鸟鸣、生活声。设置页只选择不发声，点击「开始静坐」后才播放。
-- Sound options: real-voice mindfulness guidance (female in English ~3 min / female in Mandarin ~5 min), singing bowl, forest wind (real wind through trees), flowing water, ocean waves, frogs (pure frog chorus), birds, and everyday life sounds. The setup screen only selects — nothing plays until you tap "Start Sitting."
-- 整套完整练习：身体扫描（女声 English 27′ / 男声 English 37′ / 中文 4′）、完整坐禅（English 35′ / 中文 17′）。这类是**从头到尾的完整引导**，时间充裕时练习；选择后时长自动跟随音频、时长选项置灰，音频播完即自然结束，无需自行计时。
-- Full guided practices: Body Scan (female English 27′ / male English 37′ / Mandarin 4′) and Sitting Meditation (English 35′ / Mandarin 17′). These are **complete from start to finish**, for when you have more time. Once selected, the duration automatically follows the audio and the duration options are greyed out; the session ends naturally when the audio finishes — no timer needed.
+- 声音选择：真人正念引导（女声 English 约 3 分钟 / 男声普通话 5 分钟）、颂钵、林风（真实风吹树林）、流水、海浪、蛙声（纯蛙鸣）、鸟鸣、生活声。设置页只选择不发声，点击「开始静坐」后才播放。
+- Sound options: real-voice mindfulness guidance (female in English ~3 min / male in Mandarin ~5 min), singing bowl, forest wind (real wind through trees), flowing water, ocean waves, frogs (pure frog chorus), birds, and everyday life sounds. The setup screen only selects — nothing plays until you tap "Start Sitting."
+- 整套完整练习：身体扫描（女声 English 27′ / 男声 English 37′ / 女声中文 4′）、完整坐禅（English 35′ / 女声中文 17′）。这类是**从头到尾的完整引导**，时间充裕时练习；选择后时长自动跟随音频、时长选项置灰，音频播完即自然结束，无需自行计时。
+- Full guided practices: Body Scan (female English 27′ / male English 37′ / female Mandarin 4′) and Sitting Meditation (English 35′ / female Mandarin 17′). These are **complete from start to finish**, for when you have more time. Once selected, the duration automatically follows the audio and the duration options are greyed out; the session ends naturally when the audio finishes — no timer needed.
 - 界面中英文一键切换：右上角 `EN` / `中` 按钮，覆盖所有界面文案、引导语、场景与声音名称、合规声明；选择存本地，下次打开保持上次语言。
 - One-tap bilingual UI: the top-right `EN` / `中` button switches every piece of interface text — prompts, scene and sound names, disclaimer. The choice is stored locally and restored next time.
 - 会话中可随时暂停、静音或结束；支持键盘快捷键：空格暂停/继续、Esc 结束（闭眼练习时无需看屏幕）。
@@ -44,15 +44,15 @@ An online space for stillness — no sign-up, no chat, no push notifications, no
 
 ## 声音说明 / About the Sounds
 
-### 真人正念短引导（女声 English / 女声普通话） / Real-Voice Short Guidance (Female English / Female Mandarin)
+### 真人正念短引导（女声 English / 男声普通话） / Real-Voice Short Guidance (Female English / Male Mandarin)
 
-两段都是**真人女声引导录音**，来自两个授权清晰的公开来源；原先的普通话合成语音因听感生硬已弃用。普通话短引导经逐段试听确认为女声（UCLA 多语言版由母语教师朗读，普通话译者为 Jingjing Zhu 博士），早期文档误标为男声，现已更正。
-Both are **real female-voice guidance recordings** from two sources with clear licensing; the earlier Mandarin synthesized voice was dropped for sounding too robotic. The Mandarin short guidance was confirmed by listening to be a female voice (UCLA's multilingual versions are read by native-speaker teachers; the Mandarin translation is by Dr. Jingjing Zhu). Earlier documents mislabeled it as male; this has now been corrected.
+两段都是**真人引导录音**，来自两个授权清晰的公开来源；原先的普通话合成语音因听感生硬已弃用。英语段为女声（Christina），普通话段为男声。UCLA 官方页面仅注明英语版由主任 Diana Winston 录制、普通话翻译为 Jingjing Zhu 博士，并未逐语言标注朗读者性别；本站的性别标注以实际试听为准。
+Both are **real-voice guidance recordings** from two sources with clear licensing; the earlier Mandarin synthesized voice was dropped for sounding too robotic. The English track is female (Christina); the Mandarin track is male. UCLA's page credits only the English recording (director Diana Winston) and the Mandarin translation (Dr. Jingjing Zhu), without labelling the reader's gender per language; gender labels here follow direct listening.
 
 - 女声 English `sound=guide3`：*Three Step Breathing Space*，Christina，**2:52**，[The Free Mindfulness Project](https://www.freemindfulness.org/download)，**CC BY-NC-SA 3.0**
 - Female English `sound=guide3`: *Three Step Breathing Space*, Christina, **2:52**, The Free Mindfulness Project, CC BY-NC-SA 3.0
-- 女声普通话 `sound=guide3m`：*Breathing Meditation*，UCLA Mindful（Jingjing Zhu 译），**5:33**，[UCLA Mindful](https://www.uclahealth.org/uclamindful/guided-meditations)，**CC BY-NC-ND 4.0**
-- Female Mandarin `sound=guide3m`: *Breathing Meditation*, UCLA Mindful (translated by Jingjing Zhu), **5:33**, UCLA Mindful, CC BY-NC-ND 4.0
+- 男声普通话 `sound=guide3m`：*Breathing Meditation*，UCLA Mindful（Jingjing Zhu 译），**5:33**，[UCLA Mindful](https://www.uclahealth.org/uclamindful/guided-meditations)，**CC BY-NC-ND 4.0**
+- Male Mandarin `sound=guide3m`: *Breathing Meditation*, UCLA Mindful (translated by Jingjing Zhu), **5:33**, UCLA Mindful, CC BY-NC-ND 4.0
 
 两者都是呼吸觉察类练习：觉察身体 → 把注意力收到呼吸 → 将觉察扩展至全身。两个授权都允许非商业原样再分发，本站为非商业、免费项目，符合授权条件；署名见下方授权表。CC BY-NC-ND 禁止改编，本站仅重命名、不剪辑内容。
 Both are breath-awareness practices: notice the body → bring attention to the breath → expand awareness. Both licenses permit non-commercial verbatim redistribution; this free, non-commercial site qualifies. Attribution is in the license table below. CC BY-NC-ND forbids derivatives — this site only renames files and never edits content.
@@ -69,12 +69,12 @@ For those with time to practice a full session from beginning to end. The three 
 - Body Scan · Female `sound=bodyscanf`: *Body Scan*, Christina, **26:46**. Lying down or sitting are both fine; bring awareness successively to each part of the body, cultivating gentle, non-judgmental body awareness.
 - 身体扫描·男声 `sound=bodyscanm`：*Body Scan*，Paddy，**37:09**。更长的身体扫描，适合慢慢走完全身。
 - Body Scan · Male `sound=bodyscanm`: *Body Scan*, Paddy, **37:09**. A longer body scan, ideal for slowly moving through the whole body.
-- 身体扫描·中文 `sound=bodyscancn`：*Short Body Scan*，UCLA Mindful，**4:09**。普通话短身体扫描，适合快速把觉察带回身体。
-- Body Scan · Mandarin `sound=bodyscancn`: *Short Body Scan*, UCLA Mindful, **4:09**. A short Mandarin body scan to quickly bring awareness back to the body.
+- 身体扫描·女声中文 `sound=bodyscancn`：*Short Body Scan*，UCLA Mindful，**4:09**。女声普通话短身体扫描，适合快速把觉察带回身体。
+- Body Scan · Female Mandarin `sound=bodyscancn`: *Short Body Scan*, UCLA Mindful, **4:09**. A short female-voice Mandarin body scan to quickly bring awareness back to the body.
 - 完整坐禅·引导 `sound=sitting`：*Sitting Meditation*，Peter，**34:50**。从呼吸到身体、声音，再到念头与情绪，走一整套 MBSR 风格的正念静坐。
 - Sitting Meditation · Guided `sound=sitting`: *Sitting Meditation*, Peter, **34:50**. From breath to body and sounds, then to thoughts and emotions — a complete MBSR-style mindfulness sit.
-- 完整坐禅·中文 `sound=sittingcn`：*Complete Meditation Instructions*，UCLA Mindful，**17:28**。普通话完整练习，最适合中文用户从头练完一整套。
-- Sitting Meditation · Mandarin `sound=sittingcn`: *Complete Meditation Instructions*, UCLA Mindful, **17:28**. A complete Mandarin practice — the best option for Chinese speakers to finish a full sit.
+- 完整坐禅·女声中文 `sound=sittingcn`：*Complete Meditation Instructions*，UCLA Mindful，**17:28**。女声普通话完整练习，最适合中文用户从头练完一整套。
+- Sitting Meditation · Female Mandarin `sound=sittingcn`: *Complete Meditation Instructions*, UCLA Mindful, **17:28**. A complete female-voice Mandarin practice — the best option for Chinese speakers to finish a full sit.
 
 与 3 分钟短引导的关键区别：**这类音频本身就是完整练习**，所以会话时长直接取录音长度（`FULL_PRACTICE` 中写入的秒数），时钟与进度以音频为准，时长选项自动置灰；整段播完即判定本次圆满并进入结束页，统计按录音全长计入。屏幕同样只给一句静态提示，不与中文引导语叠加。引导尚未播完时手动静音再开启，音频会从暂停处继续并重新接管屏幕；若引导已自然播完，本场语音即退场，重新开启不会从头重播。
 The key difference from the 3-minute short guidance: **these audio files are themselves complete practices**, so the session length is taken directly from the recording (the seconds stored in `FULL_PRACTICE`); the clock and progress follow the audio, and the duration options are automatically greyed out. When the track finishes, the session is complete and moves to the end screen, with the full recorded length credited to your stats. As before, the screen shows only one static hint and does not overlay Chinese prompts. If you mute and unmute while the audio is still playing, it resumes from where it paused and retakes the screen; once the guidance has finished naturally, turning sound back on does **not** replay it from the beginning.
@@ -85,10 +85,12 @@ The key difference from the 3-minute short guidance: **these audio files are the
 - Verified that Harvard HUHS's official 3-/4-minute guided meditation is a phone hotline, **Pause 4-calm**, and does not provide redistributable audio files: <https://wellness.huhs.harvard.edu/mindfulness-and-meditation>
 - 中文「哈佛正念」课程多为付费或有明确传播限制，不适合作为本站静态资源分发。
 - Most Chinese "Harvard mindfulness" courses are paid or have explicit distribution restrictions, making them unsuitable as static assets for this site.
-- **已找到合规的普通话女声真人来源**：[UCLA Mindful](https://www.uclahealth.org/uclamindful/guided-meditations) 的多语言引导由 The Regents of the University of California 以 **CC BY-NC-ND 4.0** 发布，含女声普通话短引导、身体扫描、完整坐禅。多语言版由母语教师朗读，普通话译者为 Jingjing Zhu 博士，经逐段试听确认为女声。本站以非商业、不改编（仅重命名）方式使用，符合授权。
-- **A compliant Mandarin female-voice source was found**: [UCLA Mindful](https://www.uclahealth.org/uclamindful/guided-meditations) multilingual meditations are published by The Regents of the University of California under **CC BY-NC-ND 4.0**, including a female Mandarin short guidance, body scan, and complete sitting. The multilingual versions are read by native-speaker teachers (the Mandarin translation is by Dr. Jingjing Zhu), confirmed by listening to be a female voice. This site uses them non-commercially and unmodified (renamed only), which the license permits.
-- 英语与普通话两种语言都有合规的女声真人引导；界面清楚标注语言，用户可自选。此前"女声普通话来源未找到"的判断源于早期误标，已通过实际试听更正。
-- Both English and Mandarin have compliant female human-voice guidance; the interface clearly labels the language so users can choose. The earlier claim that "no female Mandarin source was found" stemmed from a mislabel and has been corrected after actually listening.
+- **已找到合规的普通话真人引导来源**：[UCLA Mindful](https://www.uclahealth.org/uclamindful/guided-meditations) 的多语言引导由 The Regents of the University of California 以 **CC BY-NC-ND 4.0** 发布，含普通话短引导（男声）、身体扫描（女声）、完整坐禅（女声）。多语言版由母语教师朗读，普通话译者为 Jingjing Zhu 博士；官方未逐条标注朗读者性别，界面标注以实际试听为准。本站以非商业、不改编（仅重命名）方式使用，符合授权。
+- **A compliant Mandarin human-voice source was found**: [UCLA Mindful](https://www.uclahealth.org/uclamindful/guided-meditations) multilingual meditations are published by The Regents of the University of California under **CC BY-NC-ND 4.0**, including a Mandarin short guidance (male voice), body scan (female voice) and complete sitting (female voice). The multilingual versions are read by native-speaker teachers (the Mandarin translation is by Dr. Jingjing Zhu); UCLA does not label the reader's gender per track, so the UI labels follow direct listening. This site uses them non-commercially and unmodified (renamed only), which the license permits.
+- 英语与普通话都有合规真人引导：英语为女声，普通话含男声短引导与女声整套练习；界面清楚标注语言与性别，用户可自选。
+- Both English and Mandarin have compliant human-voice guidance: English is female; Mandarin includes a male short guidance and female full practices. The interface labels language and gender so users can choose.
+- **语言核实**：三段普通话文件（`guide3_cn` / `bodyscan_cn` / `sitting_cn`）与 UCLA 官方 Mandarin 源文件 SHA256 一致，并分别在开头、约 50% 中段、约 82% 末段做过语音转写，全程均为标准普通话中文；英语版 `sitting_full.mp3` 对照转写为英文。若播放时听到非中文，通常是点到了英语选项或浏览器缓存，可对照页面标注的时长确认（中文 4′ / 5:33 / 17′，英语 27′ / 35′）。
+- **Language check**: The three Mandarin files (`guide3_cn` / `bodyscan_cn` / `sitting_cn`) are byte-identical (SHA256) to UCLA's official Mandarin sources and were transcribed at the opening, mid-point (~50%) and tail (~82%); all are Standard Mandarin Chinese throughout. The English `sitting_full.mp3` transcribes as English. If you hear a non-Chinese track, it is usually the English option or a browser cache — check the durations shown on the page (Mandarin 4′ / 5:33 / 17′, English 27′ / 35′).
 - 澳洲 NSW 卫生部的多语言正念页面无明确再分发授权，未采用；来源不明的中文课程音频一律不使用。
 - The NSW Health multilingual mindfulness page has no explicit redistribution license and was not used; Chinese audio of unclear provenance is never used.
 
@@ -100,12 +102,12 @@ Ambient sounds come from public transcodes on Wikimedia Commons and public previ
 | 选项 Option | 本地文件 File | 内容 Content | 作者 / 来源 Author / Source | 授权 License |
 | --- | --- | --- | --- | --- |
 | 正念引导·女声 Guided · Female | `assets/audio/guide3_female.mp3` | Three Step Breathing Space，2:52 | [The Free Mindfulness Project](https://www.freemindfulness.org/download)，Christina | CC BY-NC-SA 3.0 |
-| 正念引导·女声（普通话）Guided · Female (Mandarin) | `assets/audio/guide3_cn.mp3` | Breathing Meditation，5:33 | [UCLA Mindful](https://www.uclahealth.org/uclamindful/guided-meditations)，The Regents of the University of California | CC BY-NC-ND 4.0 |
+| 正念引导·男声（普通话）Guided · Male (Mandarin) | `assets/audio/guide3_cn.mp3` | Breathing Meditation，5:33 | [UCLA Mindful](https://www.uclahealth.org/uclamindful/guided-meditations)，The Regents of the University of California | CC BY-NC-ND 4.0 |
 | 身体扫描·女声 Body Scan · Female | `assets/audio/bodyscan_female.mp3` | Body Scan，26:46 | [The Free Mindfulness Project](https://player.freemindfulness.org)，Christina | CC BY-NC-SA 3.0 |
 | 身体扫描·男声 Body Scan · Male | `assets/audio/bodyscan_male.mp3` | Body Scan，37:09 | [The Free Mindfulness Project](https://player.freemindfulness.org)，Paddy | CC BY-NC-SA 3.0 |
-| 身体扫描·中文 Body Scan · Mandarin | `assets/audio/bodyscan_cn.mp3` | Short Body Scan，4:09 | [UCLA Mindful](https://www.uclahealth.org/uclamindful/guided-meditations)，The Regents of the University of California | CC BY-NC-ND 4.0 |
+| 身体扫描·女声中文 Body Scan · Female Mandarin | `assets/audio/bodyscan_cn.mp3` | Short Body Scan，4:09 | [UCLA Mindful](https://www.uclahealth.org/uclamindful/guided-meditations)，The Regents of the University of California | CC BY-NC-ND 4.0 |
 | 完整坐禅·引导 Sitting Meditation | `assets/audio/sitting_full.mp3` | Sitting Meditation，34:50 | [The Free Mindfulness Project](https://player.freemindfulness.org)，Peter | CC BY-NC-SA 3.0 |
-| 完整坐禅·中文 Sitting · Mandarin | `assets/audio/sitting_cn.mp3` | Complete Meditation Instructions，17:28 | [UCLA Mindful](https://www.uclahealth.org/uclamindful/guided-meditations)，The Regents of the University of California | CC BY-NC-ND 4.0 |
+| 完整坐禅·女声中文 Sitting · Female Mandarin | `assets/audio/sitting_cn.mp3` | Complete Meditation Instructions，17:28 | [UCLA Mindful](https://www.uclahealth.org/uclamindful/guided-meditations)，The Regents of the University of California | CC BY-NC-ND 4.0 |
 | 颂钵 Singing bowl | `assets/audio/bowl.mp3` | 31 秒铜钵长音，适合循环 / 31s bowl tone, loopable | [Tibetan singing bowl for meditation](https://freesound.org/s/436935)，franciscoguerrero | CC0 1.0 |
 | 林风 Forest wind | `assets/audio/forest.mp3` | 真实风吹树林 52 秒 / Real wind through a forest, 52s | [Wind in forest (Gravity Sound)](https://commons.wikimedia.org/wiki/File:Wind_in_forest_(Gravity_Sound).wav)，Gravity Sound | CC BY 4.0 |
 | 流水 Flowing water | `assets/audio/stream.mp3` | 近场溪流声 / Close-up stream sound | [Soft stream flowing water](https://commons.wikimedia.org/wiki/File:433589_jackthemurray_stream-river-water-up-close.wav)，jackthemurray | CC0 1.0 |

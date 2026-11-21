@@ -10,12 +10,12 @@
 
   var FILES = {
     guide3: 'assets/audio/guide3_female.mp3',      // 女声短引导 · English · Free Mindfulness
-    guide3m: 'assets/audio/guide3_cn.mp3',         // 女声短引导 · 普通话 · UCLA Mindful
+    guide3m: 'assets/audio/guide3_cn.mp3',         // 男声短引导 · 普通话 · UCLA Mindful
     bodyscanf: 'assets/audio/bodyscan_female.mp3', // 身体扫描 · 女声 English
     bodyscanm: 'assets/audio/bodyscan_male.mp3',   // 身体扫描 · 男声 English
-    bodyscancn: 'assets/audio/bodyscan_cn.mp3',    // 身体扫描 · 普通话 · UCLA Mindful
+    bodyscancn: 'assets/audio/bodyscan_cn.mp3',    // 身体扫描 · 女声普通话 · UCLA Mindful
     sitting: 'assets/audio/sitting_full.mp3',      // 完整坐禅 · English
-    sittingcn: 'assets/audio/sitting_cn.mp3',      // 完整坐禅 · 普通话 · UCLA Mindful
+    sittingcn: 'assets/audio/sitting_cn.mp3',      // 完整坐禅 · 女声普通话 · UCLA Mindful
     bowl: 'assets/audio/bowl.mp3',
     forest: 'assets/audio/forest.mp3',             // 林风：风吹树林
     water: 'assets/audio/stream.mp3',
